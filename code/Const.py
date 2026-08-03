@@ -1,0 +1,29 @@
+# font file
+FONT_SMALLFONTS = './assets/fonts/BULKYPIX.TTF'
+FONT_LARGEFONTS = './assets/fonts/acknowtt.ttf'
+
+# colors
+C_BLACK = (0, 0, 0)
+C_GRAY = (127, 127, 127)
+C_WHITE = (255, 255, 255)
+
+# shadow
+SHADOW_COLOR = C_GRAY
+SHADOW_DIRECTION = (1, 1)
+
+# sizes
+WINDOW_SIZE = (800, 480)
+LOGO_SIZE = (200, 200)
+TITLE_SIZE = 200
+SIGN_SIZE = 35
+
+# main menu
+MENU_HEIGHT = WINDOW_SIZE[1] / 1.8
+MENU_SPACING = 40
+MENU_OPTION_SIZE = 70
+MENU_OPTION = (
+    'ONE PLAYER',
+    'TWO PLAYERS',
+    'CONSTRUCTION',
+    'QUIT'
+)
