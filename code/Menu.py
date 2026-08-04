@@ -6,8 +6,8 @@ import pygame.image
 from pygame import Rect, Surface, KEYDOWN
 from pygame.font import Font
 
-from code.Const import LOGO_SIZE, WINDOW_SIZE, SHADOW_DIRECTION, SHADOW_COLOR, SIGN_SIZE, C_BLACK, FONT_SMALLFONTS, \
-    FONT_LARGEFONTS, TITLE_SIZE, MENU_OPTION, C_WHITE, C_GRAY, MENU_HEIGHT, MENU_SPACING, MENU_OPTION_SIZE
+from code.Const import LOGO_SIZE, WINDOW_SIZE, SHADOW_DIRECTION, SHADOW_COLOR, SIGN_SIZE, C_BLACK, \
+    FONT_MAIN, TITLE_SIZE, MENU_OPTION, C_WHITE, MENU_HEIGHT, MENU_SPACING, MENU_OPTION_SIZE
 
 
 class Menu:
@@ -34,14 +34,14 @@ class Menu:
 
             # title
             self.menu_text(
-                font_path=FONT_LARGEFONTS,
+                font_path=FONT_MAIN,
                 text_size=TITLE_SIZE,
                 text=f'METAL',
                 text_color=C_BLACK,
                 text_pos=(WINDOW_SIZE[0] / 2, WINDOW_SIZE[1] / 7)
             )
             self.menu_text(
-                font_path=FONT_LARGEFONTS,
+                font_path=FONT_MAIN,
                 text_size=TITLE_SIZE,
                 text=f'SIEGE',
                 text_color=C_BLACK,
@@ -50,11 +50,27 @@ class Menu:
 
             # sign
             self.menu_text(
-                font_path=FONT_LARGEFONTS,
+                font_path=FONT_MAIN,
                 text_size=SIGN_SIZE,
-                text='2026 - pgmatheus-code',
-                text_color=C_BLACK,
-                text_pos=(WINDOW_SIZE[0] - 200, WINDOW_SIZE[1] - SIGN_SIZE / 2)
+                text='This project is a student work inspired by Battle City (Namcot, 1985) ',
+                text_color=C_WHITE,
+                text_pos=(WINDOW_SIZE[0] / 2, WINDOW_SIZE[1] - SIGN_SIZE / 2 - 15)
+            )
+            self.menu_text(
+                font_path=FONT_MAIN,
+                text_size=SIGN_SIZE,
+                text='All trademarks and copyrights belong to their respective owners.',
+                text_color=C_WHITE,
+                text_pos=(WINDOW_SIZE[0] / 2, WINDOW_SIZE[1] - SIGN_SIZE / 2)
+            )
+
+            # top hud
+            self.menu_text(
+                font_path=FONT_MAIN,
+                text_size=SIGN_SIZE + 10,
+                text='I-     00     HI-  20000',
+                text_color=C_WHITE,
+                text_pos=(200, SIGN_SIZE / 2)
             )
 
             # main menu
@@ -72,7 +88,7 @@ class Menu:
 
                 # color main
                 self.menu_text(
-                    font_path=FONT_LARGEFONTS,
+                    font_path=FONT_MAIN,
                     text_size=MENU_OPTION_SIZE,
                     text=menu_opt_str,
                     text_color=color,
