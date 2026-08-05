@@ -20,7 +20,7 @@ class Game:
                 player_score = [0, 0]  # [player1, player2]
 
                 # city 1
-                level = Level(self.window)
+                level = Level(self.window, 'city1', menu_return, player_score)
                 level_return = level.run()
 
                 # if level_return:  # city 2

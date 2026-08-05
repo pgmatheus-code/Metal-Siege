@@ -1,4 +1,6 @@
 # font file
+import pygame
+
 FONT_MAIN = './assets/fonts/acknowtt.ttf'
 
 # colors
@@ -28,3 +30,53 @@ MENU_OPTION = (
     'CONSTRUCTION',
     'QUIT'
 )
+
+# global level settings
+LEVEL_FPS = 60
+
+# entity defaults
+PLAYER_HEALTH = 300
+PLAYER_DAMAGE = 50
+PLAYER_SHOT_DELAY = 10
+PLAYER_SPEED = 5
+
+ENEMY1_HEALTH = 100
+ENEMY1_DAMAGE = 25
+ENEMY1_SPEED = 10
+
+ENEMY2_HEALTH = 200
+ENEMY2_DAMAGE = 50
+ENEMY2_SPEED = 15
+
+ENEMY3_HEALTH = 300
+ENEMY3_DAMAGE = 100
+ENEMY3_SPEED = 5
+
+# key binding
+KEY_UP = \
+    {
+        'player1': pygame.K_w,
+        'player2': pygame.K_UP
+    }
+
+KEY_DOWN = \
+    {
+        'player1': pygame.K_s,
+        'player2': pygame.K_DOWN
+    }
+
+KEY_LEFT = \
+    {
+        'player1': pygame.K_a,
+        'player2': pygame.K_LEFT
+    }
+KEY_RIGHT = \
+    {
+        'player1': pygame.K_d,
+        'player2': pygame.K_RIGHT
+    }
+KEY_SHOOT = \
+    {
+        'player1': pygame.K_SPACE,
+        'player2': pygame.K_KP_PLUS
+    }

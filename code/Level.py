@@ -2,12 +2,18 @@ import pygame
 from pygame import Surface, Rect
 
 from code.Const import SHADOW_DIRECTION, SHADOW_COLOR, FONT_MAIN, C_WHITE, WINDOW_SIZE, MAP_BOTTOMRIGHT, \
-    MAP_TOPLEFT
+    MAP_TOPLEFT, LEVEL_FPS
+from code.Entity import Entity
+from code.EntityFactory import EntityFactory
 
 
 class Level:
-    def __init__(self, window: Surface):
+    def __init__(self, window: Surface, name: str, game_mode: str, player_score: list[int]):
+        # attributes
+        self.player_score = player_score
         self.window = window
+        self.name = name
+        self.game_mode = game_mode
 
         # hud background
         self.hud_background = pygame.image.load('./assets/sprites/main_menu/main_menu_background.png').convert_alpha()
@@ -19,57 +25,106 @@ class Level:
         self.map_rect = self.map_background.get_rect(topleft=MAP_TOPLEFT)
         self.map_background = pygame.transform.scale(self.map_background, MAP_BOTTOMRIGHT)
 
+        # spawning
+        self.entity_list: list[Entity] = []
+
+        # level blocks instantiation
+        # self.entity_list.extend(EntityFactory.get_entity(name))
+
+        # player 1 instantiation
+        player = EntityFactory.get_entity('player1')
+        # player.score = player_score[0]
+        self.entity_list.append(player)
+
     def run(self):
-        selected_option = 0
+        # Initialize mixer
+        # pygame.mixer.init()
 
         # music
-        # pygame.mixer.music.load('./assets/sounds/main_menu.mp3')
+        # pygame.mixer.music.load(f'./assets/sounds/{self.name}.mp3')
         # pygame.mixer.music.play(-1)  # minus one for loop
 
+        # clock
+        clock = pygame.time.Clock()
+
+        # DRAW -----------------------------------------------------------------------------------------------------
+        # image
+        self.window.blit(source=self.hud_background, dest=self.hud_rect)
+        self.window.blit(source=self.map_background, dest=self.map_rect)
+
+        # player hud labels
+        self.level_text(
+            font_path=FONT_MAIN,
+            text_size=30,
+            text='P1',
+            text_color=C_WHITE,
+            text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2) + 15, WINDOW_SIZE[1] / 2 - 40)
+        )
+
+        self.level_text(
+            font_path=FONT_MAIN,
+            text_size=30,
+            text='P2',
+            text_color=C_WHITE,
+            text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2) + 15, WINDOW_SIZE[1] / 2 + 40)
+        )
+
+        # main loop
         while True:
-            # DRAW -----------------------------------------------------------------------------------------------------
-            # image
-            self.window.blit(source=self.hud_background, dest=self.hud_rect)
-            self.window.blit(source=self.map_background, dest=self.map_rect)
+            clock.tick(LEVEL_FPS)
+            for entity in self.entity_list:
+                # apply drawing
+                self.window.blit(source=entity.surf, dest=entity.rect)
 
-            # player hud labels
-            self.level_text(
-                font_path=FONT_MAIN,
-                text_size=30,
-                text='P1',
-                text_color=C_WHITE,
-                text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2) + 15, WINDOW_SIZE[1] / 2 - 40)
-            )
+                # move each stuff
+                entity.move()
 
-            self.level_text(
-                font_path=FONT_MAIN,
-                text_size=30,
-                text='P2',
-                text_color=C_WHITE,
-                text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2) + 15, WINDOW_SIZE[1] / 2 + 40)
-            )
+                # shot
+                # if isinstance(entity, (Player, Foe)):
+                #     shot = entity.shoot()
+                #     if shot is not None:
+                #         self.entity_list.append(shot)
+                #
+                #         entity_formatted_name = ''
+                #
+                #         if entity.name in ['player1_ship', 'player2_ship']:
+                #             entity_formatted_name = entity.name[:-5]
+                #         elif entity.name[:3] == 'foe':
+                #             entity_formatted_name = 'foe'
+                #
+                #         if entity_formatted_name != '':
+                #             shoot_sfx = pygame.mixer.Sound(f'./assets/sounds/{entity_formatted_name}_shot.mp3')
+                #             shoot_sfx.set_volume(0.4)
+                #             shoot_sfx.play()
 
-            # # main menu
-            # for i in range(len(MENU_OPTION)):
-            #     menu_opt_str = MENU_OPTION[i]
-            #
-            #     if i == selected_option:
-            #         color = C_WHITE
-            #     else:
-            #         color = C_BLACK
-            #
-            #     # menu opt pos
-            #     menu_opt_x = (WINDOW_SIZE[0] / 2)
-            #     menu_opt_y = (MENU_HEIGHT + MENU_SPACING * i)
-            #
-            #     # color main
-            #     self.menu_text(
-            #         font_path=FONT_LARGEFONTS,
-            #         text_size=MENU_OPTION_SIZE,
-            #         text=menu_opt_str,
-            #         text_color=color,
-            #         text_pos=(menu_opt_x, menu_opt_y)
-            #     )
+                # player hud
+                # if entity.name == 'player1_ship':
+                #     self.level_text(
+                #         text_size=14,
+                #         text=f'Player 1 Health: {entity.health}',
+                #         text_color=NEON_PINK,
+                #         text_pos=(10, WIN_HEIGHT - 60)
+                #     )
+                #     self.level_text(
+                #         text_size=14,
+                #         text=f'Score: {entity.score}',
+                #         text_color=NEON_PINK,
+                #         text_pos=(10, WIN_HEIGHT - 30)
+                #     )
+                # if entity.name == 'player2_ship':
+                #     self.level_text(
+                #         text_size=14,
+                #         text=f'Player 2 Health: {entity.health}',
+                #         text_color=NEON_PINK,
+                #         text_pos=(WIN_WIDTH - 230, WIN_HEIGHT - 60)
+                #     )
+                #     self.level_text(
+                #         text_size=14,
+                #         text=f'Score: {entity.score} PTS',
+                #         text_color=NEON_PINK,
+                #         text_pos=(WIN_WIDTH - 230, WIN_HEIGHT - 30)
+                #     )
+
 
             # update display
             pygame.display.flip()
