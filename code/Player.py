@@ -1,8 +1,9 @@
 import pygame
 
 from code.Const import PLAYER_HEALTH, PLAYER_DAMAGE, PLAYER_SHOT_DELAY, KEY_LEFT, PLAYER_SPEED, KEY_RIGHT, KEY_UP, \
-    KEY_DOWN, WINDOW_SIZE, KEY_SHOOT
+    KEY_DOWN, WINDOW_SIZE, KEY_SHOOT, MAP_TOPLEFT, MAP_BOTTOMRIGHT
 from code.MoveableEntity import MoveableEntity
+from code.Shot import Shot
 
 
 class Player(MoveableEntity):
@@ -17,27 +18,42 @@ class Player(MoveableEntity):
             speed=PLAYER_SPEED,
             damage=PLAYER_DAMAGE
         )
-        print(f'{player_name} at {position}')
 
         self.shot_timer = PLAYER_SHOT_DELAY
         self.is_shot_ready = False
+        self.angle = 0
+        self.original_image = self.surf
 
     def move(self):
         pressed_key = pygame.key.get_pressed()
         player_name = self.name[5:]
 
-        if pressed_key[KEY_LEFT[player_name]] and self.rect.left > 10:
+        moved = False
+
+        if pressed_key[KEY_LEFT[player_name]] and self.rect.left > MAP_TOPLEFT[0]:
             self.rect.centerx -= PLAYER_SPEED
-        if pressed_key[KEY_RIGHT[player_name]] and self.rect.right < WINDOW_SIZE[0] - 10:
+            self.angle = 90
+            moved = True
+        elif pressed_key[KEY_RIGHT[player_name]] and self.rect.right < MAP_BOTTOMRIGHT[0] + 30:
             self.rect.centerx += PLAYER_SPEED
-        if pressed_key[KEY_UP[player_name]] and self.rect.top > 10:
+            self.angle = 270
+            moved = True
+        elif pressed_key[KEY_UP[player_name]] and self.rect.top > MAP_TOPLEFT[1]:
             self.rect.centery -= PLAYER_SPEED
-        if pressed_key[KEY_DOWN[player_name]] and self.rect.bottom < WINDOW_SIZE[1] - 10:
+            self.angle = 0
+            moved = True
+        elif pressed_key[KEY_DOWN[player_name]] and self.rect.bottom < MAP_BOTTOMRIGHT[1] + 30:
             self.rect.centery += PLAYER_SPEED
+            self.angle = 180
+            moved = True
+
+        # apply rotation
+        if moved:
+            self.surf = pygame.transform.rotate(self.original_image, self.angle)
+            self.rect = self.surf.get_rect(center=self.rect.center)
 
     def shoot(self):
-
-        player_name = self.name[:7]
+        player_name = self.name[5:]
         pressed_key = pygame.key.get_pressed()
 
         if self.shot_timer > 0:
@@ -49,5 +65,18 @@ class Player(MoveableEntity):
             self.shot_timer = PLAYER_SHOT_DELAY
             self.is_shot_ready = False
 
-            return PlayerShot(name=f'{player_name}_shot', position=(self.rect.centerx, self.rect.centery))
+            # direction angle based { angle, direction
+            direction_dict = {
+                0 :  (0, -1),
+                90 : (-1, 0),
+                180 : (0, 1),
+                270 : (1, 0),
+            }
+
+            return Shot(
+                shooter=player_name,
+                position=(self.rect.centerx, self.rect.centery),
+                direction=direction_dict[self.angle]
+            )
+
         return None

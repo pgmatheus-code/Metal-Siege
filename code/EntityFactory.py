@@ -1,4 +1,6 @@
-from code.Const import WINDOW_SIZE
+import random
+
+from code.Const import WINDOW_SIZE, MAP_TOPLEFT, MAP_BOTTOMRIGHT
 from code.Player import Player
 
 
@@ -14,9 +16,10 @@ class EntityFactory:
             #         list_bg.append(Background(name=f'{entity_name}/layer{i + 1}', position=(WIN_WIDTH, 0)))
             #     return list_bg
             case 'player1':
-                return Player(player_name='player1', position=(WINDOW_SIZE[0] / 2, (WINDOW_SIZE[1] / 2) - 15))
-            # case 'player2':
-            #     return Player(name='player2', position=(10, (WIN_HEIGHT / 2) + 15))
-            # case 'foe':
-            #     return Foe(name='foe', position=(WIN_WIDTH + 20, random.randint(10, WIN_HEIGHT - 50)))
+                return Player(player_name='player1', position=(MAP_BOTTOMRIGHT[0] / 2 - 15, MAP_BOTTOMRIGHT[1] - 30))
+            case 'player2':
+                return Player(player_name='player2', position=(MAP_BOTTOMRIGHT[0] / 2 + 15, MAP_BOTTOMRIGHT[1] - 30))
+            case 'enemy':
+                random_pos = (random.randint(MAP_TOPLEFT[0], MAP_BOTTOMRIGHT[0]), random.randint(MAP_TOPLEFT[1], MAP_BOTTOMRIGHT[1]))
+                return Enemy(name='foe', position=random_pos)
         return None

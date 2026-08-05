@@ -1,3 +1,5 @@
+import sys
+
 import pygame
 from pygame import Surface, Rect
 
@@ -5,6 +7,7 @@ from code.Const import SHADOW_DIRECTION, SHADOW_COLOR, FONT_MAIN, C_WHITE, WINDO
     MAP_TOPLEFT, LEVEL_FPS
 from code.Entity import Entity
 from code.EntityFactory import EntityFactory
+from code.Player import Player
 
 
 class Level:
@@ -36,6 +39,11 @@ class Level:
         # player.score = player_score[0]
         self.entity_list.append(player)
 
+        # player 2 instantiation
+        player = EntityFactory.get_entity('player2')
+        # player.score = player_score[0]
+        self.entity_list.append(player)
+
     def run(self):
         # Initialize mixer
         # pygame.mixer.init()
@@ -47,31 +55,31 @@ class Level:
         # clock
         clock = pygame.time.Clock()
 
-        # DRAW -----------------------------------------------------------------------------------------------------
-        # image
-        self.window.blit(source=self.hud_background, dest=self.hud_rect)
-        self.window.blit(source=self.map_background, dest=self.map_rect)
-
-        # player hud labels
-        self.level_text(
-            font_path=FONT_MAIN,
-            text_size=30,
-            text='P1',
-            text_color=C_WHITE,
-            text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2) + 15, WINDOW_SIZE[1] / 2 - 40)
-        )
-
-        self.level_text(
-            font_path=FONT_MAIN,
-            text_size=30,
-            text='P2',
-            text_color=C_WHITE,
-            text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2) + 15, WINDOW_SIZE[1] / 2 + 40)
-        )
-
         # main loop
         while True:
             clock.tick(LEVEL_FPS)
+
+            # generic hud
+            self.window.blit(source=self.hud_background, dest=self.hud_rect)
+            self.window.blit(source=self.map_background, dest=self.map_rect)
+            self.level_text(
+                font_path=FONT_MAIN,
+                text_size=30,
+                text='P1',
+                text_color=C_WHITE,
+                text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2) + 15,
+                          WINDOW_SIZE[1] / 2 - 40)
+            )
+            self.level_text(
+                font_path=FONT_MAIN,
+                text_size=30,
+                text='P2',
+                text_color=C_WHITE,
+                text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2) + 15,
+                          WINDOW_SIZE[1] / 2 + 40)
+            )
+
+            # entity specific
             for entity in self.entity_list:
                 # apply drawing
                 self.window.blit(source=entity.surf, dest=entity.rect)
@@ -80,10 +88,10 @@ class Level:
                 entity.move()
 
                 # shot
-                # if isinstance(entity, (Player, Foe)):
-                #     shot = entity.shoot()
-                #     if shot is not None:
-                #         self.entity_list.append(shot)
+                if isinstance(entity, (Player)):
+                    shot = entity.shoot()
+                    if shot is not None:
+                        self.entity_list.append(shot)
                 #
                 #         entity_formatted_name = ''
                 #
@@ -125,6 +133,12 @@ class Level:
                 #         text_pos=(WIN_WIDTH - 230, WIN_HEIGHT - 30)
                 #     )
 
+            # get any pygame event
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    # standard quit event (to avoid window freeze)
+                    pygame.quit()
+                    sys.exit()
 
             # update display
             pygame.display.flip()
