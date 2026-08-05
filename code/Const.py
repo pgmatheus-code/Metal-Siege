@@ -36,18 +36,32 @@ LEVEL_FPS = 60
 
 # entity defaults
 PLAYER_HEALTH = 300
-PLAYER_DAMAGE = 50
 PLAYER_SHOT_DELAY = 30
 PLAYER_SPEED = 2
 
-ENEMY1_HEALTH = 100
-ENEMY1_SPEED = 2
+ENEMY_HEALTH = {
+    'enemy1' : 100,
+    'enemy2' : 200,
+    'enemy3' : 500,
+}
 
-ENEMY2_HEALTH = 200
-ENEMY2_SPEED = 3
+ENEMY_SPEED = {
+    'enemy1' : 2,
+    'enemy2' : 1,
+    'enemy3' : 0.25,
+}
 
-ENEMY3_HEALTH = 500
-ENEMY3_SPEED = 1
+ENEMY_SHOT_DELAY = {
+    'enemy1' : 30,
+    'enemy2' : 20,
+    'enemy3' : 15,
+}
+
+ENEMY_RANDOM_MOVEMENT_DELAY = {
+    'enemy1' : 5,
+    'enemy2' : 10,
+    'enemy3' : 15,
+}
 
 SHOT_SPEED = 4
 SHOT_DAMAGE = 50

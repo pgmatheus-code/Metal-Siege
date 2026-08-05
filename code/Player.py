@@ -1,7 +1,7 @@
 import pygame
 
-from code.Const import PLAYER_HEALTH, PLAYER_DAMAGE, PLAYER_SHOT_DELAY, KEY_LEFT, PLAYER_SPEED, KEY_RIGHT, KEY_UP, \
-    KEY_DOWN, WINDOW_SIZE, KEY_SHOOT, MAP_TOPLEFT, MAP_BOTTOMRIGHT
+from code.Const import PLAYER_HEALTH, PLAYER_SHOT_DELAY, KEY_LEFT, PLAYER_SPEED, KEY_RIGHT, KEY_UP, \
+    KEY_DOWN, KEY_SHOOT, MAP_TOPLEFT, MAP_BOTTOMRIGHT
 from code.MoveableEntity import MoveableEntity
 from code.Shot import Shot
 
@@ -15,8 +15,7 @@ class Player(MoveableEntity):
             position=position,
             health=PLAYER_HEALTH,
             score=0,
-            speed=PLAYER_SPEED,
-            damage=PLAYER_DAMAGE
+            speed=PLAYER_SPEED
         )
 
         self.shot_timer = PLAYER_SHOT_DELAY

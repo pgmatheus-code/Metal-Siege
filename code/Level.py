@@ -41,6 +41,11 @@ class Level:
         # player.score = player_score[0]
         self.entity_list.append(player)
 
+        # example enemy instantiation
+        enemy = EntityFactory.get_entity('enemy')
+        # player.score = player_score[0]
+        self.entity_list.append(enemy)
+
         # map blocks instantiation
         # self.entity_list.extend(EntityFactory.get_entity('map'))
 

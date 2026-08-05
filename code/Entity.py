@@ -1,7 +1,5 @@
-from abc import ABC, abstractmethod
-
+from abc import ABC
 import pygame
-
 
 class Entity(ABC):
     def __init__(self, entity_type: str, name: str, position: tuple, health: int, score: int):

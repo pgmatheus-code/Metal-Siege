@@ -11,11 +11,8 @@ class Shot(MoveableEntity):
             health=1,
             score=0,
             speed=SHOT_SPEED,
-            damage=SHOT_DAMAGE
         )
-
-        print(f'{shooter} shot at {position}')
-
+        self.damage = SHOT_DAMAGE
         self.shooter = shooter
         self.direction = direction
 
