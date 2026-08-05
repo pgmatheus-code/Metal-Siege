@@ -31,9 +31,6 @@ class Level:
         # spawning
         self.entity_list: list[Entity] = []
 
-        # level blocks instantiation
-        # self.entity_list.extend(EntityFactory.get_entity(name))
-
         # player 1 instantiation
         player = EntityFactory.get_entity('player1')
         # player.score = player_score[0]
@@ -43,6 +40,9 @@ class Level:
         player = EntityFactory.get_entity('player2')
         # player.score = player_score[0]
         self.entity_list.append(player)
+
+        # map blocks instantiation
+        # self.entity_list.extend(EntityFactory.get_entity('map'))
 
     def run(self):
         # Initialize mixer

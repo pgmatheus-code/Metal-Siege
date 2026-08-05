@@ -11,7 +11,3 @@ class Entity(ABC):
         self.health = health
         self.last_dmg = 'None'
         self.score = score
-
-    @abstractmethod
-    def move(self):
-        pass

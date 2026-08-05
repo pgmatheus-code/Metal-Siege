@@ -11,7 +11,7 @@ class Player(MoveableEntity):
         MoveableEntity.__init__(
             self,
             entity_type='tank',
-            name=f'tank_{player_name}',
+            name=player_name,
             position=position,
             health=PLAYER_HEALTH,
             score=0,
@@ -26,7 +26,7 @@ class Player(MoveableEntity):
 
     def move(self):
         pressed_key = pygame.key.get_pressed()
-        player_name = self.name[5:]
+        player_name = self.name
 
         moved = False
 
@@ -53,7 +53,7 @@ class Player(MoveableEntity):
             self.rect = self.surf.get_rect(center=self.rect.center)
 
     def shoot(self):
-        player_name = self.name[5:]
+        player_name = self.name
         pressed_key = pygame.key.get_pressed()
 
         if self.shot_timer > 0:
