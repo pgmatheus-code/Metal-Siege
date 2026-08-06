@@ -5,6 +5,7 @@ from pygame import Surface, Rect
 
 from code.Const import SHADOW_DIRECTION, SHADOW_COLOR, FONT_MAIN, C_WHITE, WINDOW_SIZE, MAP_BOTTOMRIGHT, \
     MAP_TOPLEFT, LEVEL_FPS
+from code.Enemy import Enemy
 from code.Entity import Entity
 from code.EntityFactory import EntityFactory
 from code.EntityMediator import EntityMediator
@@ -98,7 +99,7 @@ class Stage:
                     entity.move()
 
                 # shot
-                if isinstance(entity, (Player)):
+                if isinstance(entity, (Player, Enemy)):
                     shot = entity.shoot()
                     if shot is not None:
                         self.entity_list.append(shot)

@@ -19,8 +19,9 @@ class EntityFactory:
             case 'player2':
                 return Player(player_name='player2', position=(MAP_BOTTOMRIGHT[0] / 2 + 65, MAP_BOTTOMRIGHT[1] - 30))
             case 'enemy':
-                random_pos = (random.randint(MAP_TOPLEFT[0], MAP_BOTTOMRIGHT[0]), random.randint(MAP_TOPLEFT[1], MAP_BOTTOMRIGHT[1]))
-                return Enemy(name=random.choice(['enemy1', 'enemy2', 'enemy3']), position=random_pos)
+                random_enemy = random.choice(['enemy1', 'enemy2', 'enemy3'])
+                random_pos = random.choice([(MAP_TOPLEFT[0], MAP_TOPLEFT[1]), (MAP_BOTTOMRIGHT[0] - 32, MAP_TOPLEFT[0])])
+                return Enemy(name= random_enemy, position= random_pos)
         return None
 
 def generate_block_list(block_map: list[int]):

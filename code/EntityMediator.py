@@ -41,8 +41,11 @@ class EntityMediator:
 
         # avoid friendly fire
         is_interaction_valid = False
-        if ((isinstance(entity1, Enemy) and isinstance(entity2, Shot)) or
-                (isinstance(entity1, Shot) and isinstance(entity2, Enemy)) or
+        if (
+                (isinstance(entity1, Player) and isinstance(entity2, Shot)) and entity2.shooter != entity1.name or
+                (isinstance(entity1, Shot) and isinstance(entity2, Player)) and entity1.shooter != entity2.name or
+                (isinstance(entity1, Enemy) and isinstance(entity2, Shot)) and entity2.shooter != entity1.name or
+                (isinstance(entity1, Shot) and isinstance(entity2, Enemy)) and entity1.shooter != entity2.name or
                 (isinstance(entity1, Block) and entity1.is_shootable and isinstance(entity2, Shot)) or
                 (isinstance(entity1, Shot) and isinstance(entity2, Block))  and entity2.is_shootable
         ):

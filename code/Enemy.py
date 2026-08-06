@@ -45,7 +45,7 @@ class Enemy(MoveableEntity):
             self.rect.centerx -= self.speed
             self.angle = 90
             moved = True
-        elif self.random_direction == 'right' and self.rect.right < MAP_BOTTOMRIGHT[0] + 30:
+        elif self.random_direction == 'right' and self.rect.right < MAP_BOTTOMRIGHT[0]:
             self.rect.centerx += self.speed
             self.angle = 270
             moved = True
@@ -53,7 +53,7 @@ class Enemy(MoveableEntity):
             self.rect.centery -= self.speed
             self.angle = 0
             moved = True
-        elif self.random_direction == 'down' and self.rect.bottom < MAP_BOTTOMRIGHT[1] + 30:
+        elif self.random_direction == 'down' and self.rect.bottom < MAP_BOTTOMRIGHT[1]:
             self.rect.centery += self.speed
             self.angle = 180
             moved = True
@@ -64,37 +64,21 @@ class Enemy(MoveableEntity):
             self.rect = self.surf.get_rect(center=self.rect.center)
 
     def shoot(self):
-        if self.shot_timer > 0:
-            self.shot_timer -= 1
-        else:
-            self.shot_timer = FOE_SHOT_DELAY * random.randint(1, 5)
-            return FoeShot(name='foe_shot', position=(self.rect.centerx, self.rect.centery), entity_name=self.name)
-        return None
-
-        player_name = self.name
-        pressed_key = pygame.key.get_pressed()
+        # direction angle based { angle, direction
+        direction_dict = {
+            0: (0, -1),
+            90: (-1, 0),
+            180: (0, 1),
+            270: (1, 0),
+        }
 
         if self.shot_timer > 0:
             self.shot_timer -= 1
         else:
-            self.is_shot_ready = True
-
-        if pressed_key[KEY_SHOOT[player_name]] and self.is_shot_ready:
-            self.shot_timer = PLAYER_SHOT_DELAY
-            self.is_shot_ready = False
-
-            # direction angle based { angle, direction
-            direction_dict = {
-                0 :  (0, -1),
-                90 : (-1, 0),
-                180 : (0, 1),
-                270 : (1, 0),
-            }
-
+            self.shot_timer = ENEMY_SHOT_DELAY[self.name] * random.randint(1, 5)
             return Shot(
-                shooter=player_name,
+                shooter=self.name,
                 position=(self.rect.centerx, self.rect.centery),
                 direction=direction_dict[self.angle]
             )
-
         return None
