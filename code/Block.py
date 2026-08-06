@@ -4,7 +4,7 @@ from code.Entity import Entity
 
 
 class Block(Entity):
-    def __init__(self, name: str, position: tuple, health: int, score: int, is_solid: bool, is_destructible: bool):
+    def __init__(self, name: str, position: tuple, health: int, score: int, is_solid: bool, is_shootable: bool, is_damageable: bool):
         Entity.__init__(
             self,
             entity_type='block',
@@ -13,6 +13,8 @@ class Block(Entity):
             health= health,
             score= score
         )
+        self.damage = 1
 
-        self.is_solid = is_solid # by tanks
-        self.is_destructible = is_destructible # by shots
+        self.is_solid = is_solid # passed by tanks
+        self.is_shootable = is_shootable # passed by shots
+        self.is_damageable = is_damageable # loss health

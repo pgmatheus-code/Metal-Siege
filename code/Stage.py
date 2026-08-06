@@ -7,10 +7,12 @@ from code.Const import SHADOW_DIRECTION, SHADOW_COLOR, FONT_MAIN, C_WHITE, WINDO
     MAP_TOPLEFT, LEVEL_FPS
 from code.Entity import Entity
 from code.EntityFactory import EntityFactory
+from code.EntityMediator import EntityMediator
+from code.MoveableEntity import MoveableEntity
 from code.Player import Player
 
 
-class Level:
+class Stage:
     def __init__(self, window: Surface, name: str, game_mode: str, player_score: list[int]):
         # attributes
         self.player_score = player_score
@@ -26,7 +28,8 @@ class Level:
         # map background
         self.map_background = pygame.image.load('./assets/sprites/main_menu/map_background.png').convert_alpha()
         self.map_rect = self.map_background.get_rect(topleft=MAP_TOPLEFT)
-        self.map_background = pygame.transform.scale(self.map_background, MAP_BOTTOMRIGHT)
+        scale_tuple = ((MAP_BOTTOMRIGHT[0] - MAP_TOPLEFT[0]), (MAP_BOTTOMRIGHT[1] - MAP_TOPLEFT[1]))
+        self.map_background = pygame.transform.scale(self.map_background, scale_tuple)
 
         # spawning
         self.entity_list: list[Entity] = []
@@ -36,10 +39,11 @@ class Level:
         # player.score = player_score[0]
         self.entity_list.append(player)
 
-        # player 2 instantiation
-        player = EntityFactory.get_entity('player2')
-        # player.score = player_score[0]
-        self.entity_list.append(player)
+        if (game_mode == 'TWO PLAYERS'):
+            # player 2 instantiation
+            player = EntityFactory.get_entity('player2')
+            # player.score = player_score[0]
+            self.entity_list.append(player)
 
         # example enemy instantiation
         enemy = EntityFactory.get_entity('enemy')
@@ -47,7 +51,7 @@ class Level:
         self.entity_list.append(enemy)
 
         # map blocks instantiation
-        # self.entity_list.extend(EntityFactory.get_entity('map'))
+        self.entity_list.extend(EntityFactory.get_entity(name))
 
     def run(self):
         # Initialize mixer
@@ -90,7 +94,8 @@ class Level:
                 self.window.blit(source=entity.surf, dest=entity.rect)
 
                 # move each stuff
-                entity.move()
+                if isinstance(entity, MoveableEntity):
+                    entity.move()
 
                 # shot
                 if isinstance(entity, (Player)):
@@ -102,8 +107,8 @@ class Level:
                 #
                 #         if entity.name in ['player1_ship', 'player2_ship']:
                 #             entity_formatted_name = entity.name[:-5]
-                #         elif entity.name[:3] == 'foe':
-                #             entity_formatted_name = 'foe'
+                #         elif entity.name[:3] == 'enemy':
+                #             entity_formatted_name = 'enemy'
                 #
                 #         if entity_formatted_name != '':
                 #             shoot_sfx = pygame.mixer.Sound(f'./assets/sounds/{entity_formatted_name}_shot.mp3')
@@ -147,6 +152,10 @@ class Level:
 
             # update display
             pygame.display.flip()
+
+            # Entity mediator - entity damage and destruction
+            EntityMediator.verify_collision(entity_list=self.entity_list)
+            EntityMediator.verify_health(entity_list=self.entity_list)
 
     def level_text(self, font_path: str, text_size: int, text: str, text_color: tuple, text_pos: tuple):
         text_font: pygame.font.Font = pygame.font.Font(font_path, text_size)

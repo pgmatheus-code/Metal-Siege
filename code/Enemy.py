@@ -20,6 +20,7 @@ class Enemy(MoveableEntity):
             score=0,
             speed=ENEMY_SPEED[name]
         )
+        self.damage = 1
 
         self.shot_timer = ENEMY_SHOT_DELAY[name]
         self.is_shot_ready = False
@@ -41,19 +42,19 @@ class Enemy(MoveableEntity):
         moved = False
 
         if self.random_direction == 'left' and self.rect.left > MAP_TOPLEFT[0]:
-            self.rect.centerx -= ENEMY_SPEED[self.name]
+            self.rect.centerx -= self.speed
             self.angle = 90
             moved = True
         elif self.random_direction == 'right' and self.rect.right < MAP_BOTTOMRIGHT[0] + 30:
-            self.rect.centerx += ENEMY_SPEED[self.name]
+            self.rect.centerx += self.speed
             self.angle = 270
             moved = True
         elif self.random_direction == 'up' and self.rect.top > MAP_TOPLEFT[1]:
-            self.rect.centery -= ENEMY_SPEED[self.name]
+            self.rect.centery -= self.speed
             self.angle = 0
             moved = True
         elif self.random_direction == 'down' and self.rect.bottom < MAP_BOTTOMRIGHT[1] + 30:
-            self.rect.centery += ENEMY_SPEED[self.name]
+            self.rect.centery += self.speed
             self.angle = 180
             moved = True
 

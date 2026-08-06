@@ -6,6 +6,7 @@ class MoveableEntity(Entity, ABC):
         Entity.__init__(self, entity_type, name, position, health, score)
         self.speed = speed
 
+
     @abstractmethod
     def move(self):
         pass

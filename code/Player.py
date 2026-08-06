@@ -17,6 +17,7 @@ class Player(MoveableEntity):
             score=0,
             speed=PLAYER_SPEED
         )
+        self.damage = 1
 
         self.shot_timer = PLAYER_SHOT_DELAY
         self.is_shot_ready = False
@@ -33,7 +34,7 @@ class Player(MoveableEntity):
             self.rect.centerx -= PLAYER_SPEED
             self.angle = 90
             moved = True
-        elif pressed_key[KEY_RIGHT[player_name]] and self.rect.right < MAP_BOTTOMRIGHT[0] + 30:
+        elif pressed_key[KEY_RIGHT[player_name]] and self.rect.right < MAP_BOTTOMRIGHT[0]:
             self.rect.centerx += PLAYER_SPEED
             self.angle = 270
             moved = True
@@ -41,7 +42,7 @@ class Player(MoveableEntity):
             self.rect.centery -= PLAYER_SPEED
             self.angle = 0
             moved = True
-        elif pressed_key[KEY_DOWN[player_name]] and self.rect.bottom < MAP_BOTTOMRIGHT[1] + 30:
+        elif pressed_key[KEY_DOWN[player_name]] and self.rect.bottom < MAP_BOTTOMRIGHT[1]:
             self.rect.centery += PLAYER_SPEED
             self.angle = 180
             moved = True
