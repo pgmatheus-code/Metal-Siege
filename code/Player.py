@@ -17,8 +17,10 @@ class Player(MoveableEntity):
             score=0,
             speed=PLAYER_SPEED
         )
-        self.damage = 1
 
+        self.damage = 1
+        self.movement_timer = 0
+        self.is_movement_ready = False
         self.shot_timer = PLAYER_SHOT_DELAY
         self.is_shot_ready = False
         self.angle = 0
@@ -27,28 +29,38 @@ class Player(MoveableEntity):
     def move(self):
         pressed_key = pygame.key.get_pressed()
         player_name = self.name
-
         moved = False
 
+        if self.movement_timer > 0:
+            self.movement_timer -= PLAYER_SPEED
+            return
+
+        speed = 5
+
         if pressed_key[KEY_LEFT[player_name]] and self.rect.left > MAP_TOPLEFT[0]:
-            self.rect.centerx -= PLAYER_SPEED
+            self.dx = -speed
             self.angle = 90
             moved = True
         elif pressed_key[KEY_RIGHT[player_name]] and self.rect.right < MAP_BOTTOMRIGHT[0]:
-            self.rect.centerx += PLAYER_SPEED
+            self.dx = speed
             self.angle = 270
             moved = True
         elif pressed_key[KEY_UP[player_name]] and self.rect.top > MAP_TOPLEFT[1]:
-            self.rect.centery -= PLAYER_SPEED
+            self.dy = -speed
             self.angle = 0
             moved = True
         elif pressed_key[KEY_DOWN[player_name]] and self.rect.bottom < MAP_BOTTOMRIGHT[1]:
-            self.rect.centery += PLAYER_SPEED
+            self.dy = speed
             self.angle = 180
             moved = True
+        else:
+            self.dx = 0
+            self.dy = 0
+            moved = False
 
         # apply rotation
         if moved:
+            self.movement_timer = 60
             self.surf = pygame.transform.rotate(self.original_image, self.angle)
             self.rect = self.surf.get_rect(center=self.rect.center)
 

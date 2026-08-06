@@ -37,7 +37,8 @@ LEVEL_FPS = 60
 # entity defaults
 PLAYER_HEALTH = 300
 PLAYER_SHOT_DELAY = 30
-PLAYER_SPEED = 2
+PLAYER_SPEED = 40
+
 
 ENEMY_HEALTH = {
     'enemy1' : 100,
@@ -46,9 +47,9 @@ ENEMY_HEALTH = {
 }
 
 ENEMY_SPEED = {
-    'enemy1' : 1,
-    'enemy2' : 1,
-    'enemy3' : 1,
+    'enemy1' : 40,
+    'enemy2' : 30,
+    'enemy3' : 20,
 }
 
 ENEMY_SHOT_DELAY = {

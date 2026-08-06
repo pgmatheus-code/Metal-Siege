@@ -20,8 +20,10 @@ class Enemy(MoveableEntity):
             score=0,
             speed=ENEMY_SPEED[name]
         )
-        self.damage = 1
 
+        self.damage = 1
+        self.movement_timer = 0
+        self.is_movement_ready = False
         self.shot_timer = ENEMY_SHOT_DELAY[name]
         self.is_shot_ready = False
 
@@ -40,26 +42,32 @@ class Enemy(MoveableEntity):
             self.random_direction = random.choice(['up', 'down', 'left', 'right', ''])
 
         moved = False
+        if self.movement_timer > 0:
+            self.movement_timer -= self.speed
+            return
+
+        speed = 5
 
         if self.random_direction == 'left' and self.rect.left > MAP_TOPLEFT[0]:
-            self.rect.centerx -= self.speed
+            self.dx = -speed
             self.angle = 90
             moved = True
         elif self.random_direction == 'right' and self.rect.right < MAP_BOTTOMRIGHT[0]:
-            self.rect.centerx += self.speed
+            self.dx = +speed
             self.angle = 270
             moved = True
         elif self.random_direction == 'up' and self.rect.top > MAP_TOPLEFT[1]:
-            self.rect.centery -= self.speed
+            self.dy = -speed
             self.angle = 0
             moved = True
         elif self.random_direction == 'down' and self.rect.bottom < MAP_BOTTOMRIGHT[1]:
-            self.rect.centery += self.speed
+            self.dy = +speed
             self.angle = 180
             moved = True
 
         # apply rotation
         if moved:
+            self.movement_timer = 60
             self.surf = pygame.transform.rotate(self.original_image, self.angle)
             self.rect = self.surf.get_rect(center=self.rect.center)
 

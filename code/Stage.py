@@ -11,6 +11,7 @@ from code.EntityFactory import EntityFactory
 from code.EntityMediator import EntityMediator
 from code.MoveableEntity import MoveableEntity
 from code.Player import Player
+from code.Shot import Shot
 
 
 class Stage:
@@ -47,9 +48,9 @@ class Stage:
             self.entity_list.append(player)
 
         # example enemy instantiation
-        enemy = EntityFactory.get_entity('enemy')
-        # player.score = player_score[0]
-        self.entity_list.append(enemy)
+        for i in range(2):
+            enemy = EntityFactory.get_entity('enemy')
+            self.entity_list.append(enemy)
 
         # map blocks instantiation
         self.entity_list.extend(EntityFactory.get_entity(name))
@@ -97,6 +98,9 @@ class Stage:
                 # move each stuff
                 if isinstance(entity, MoveableEntity):
                     entity.move()
+
+                    if not isinstance(entity, Shot):
+                        EntityMediator.check_collision_after_movement(entity, self.entity_list)
 
                 # shot
                 if isinstance(entity, (Player, Enemy)):

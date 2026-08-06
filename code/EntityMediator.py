@@ -2,11 +2,44 @@ from code.Block import Block
 from code.Const import WINDOW_SIZE, MAP_TOPLEFT, MAP_BOTTOMRIGHT
 from code.Enemy import Enemy
 from code.Entity import Entity
+from code.MoveableEntity import MoveableEntity
 from code.Player import Player
 from code.Shot import Shot
 
 
 class EntityMediator:
+    @staticmethod
+    def check_collision_after_movement(entity: MoveableEntity, entity_list: list[Entity]):
+        # First, attempt the move
+        entity.rect.centerx += entity.dx
+        entity.rect.centery += entity.dy
+
+        collided = False
+        for compared_entity in entity_list:
+            if entity == compared_entity: continue
+            if isinstance(entity, Shot) or isinstance(compared_entity, Shot): continue
+            if (isinstance(compared_entity, Block) and not compared_entity.is_solid): continue
+            if (isinstance(entity, Block) and not entity.is_solid): continue
+
+            # Check overlap
+            if (entity.rect.right >= compared_entity.rect.left and
+                    entity.rect.left <= compared_entity.rect.right and
+                    entity.rect.bottom >= compared_entity.rect.top and
+                    entity.rect.top <= compared_entity.rect.bottom):
+                collided = True
+                print(f'collided with {compared_entity.name}')
+                break  # stop checking once collision is found
+
+        # If collided, revert
+        if collided:
+            entity.rect.centerx -= entity.dx
+            entity.rect.centery -= entity.dy
+
+        # Reset movement deltas
+        entity.dx = 0
+        entity.dy = 0
+
+
     @staticmethod
     def __verify_collision_window(entity: Entity):  # private out-of-bounds destruction
         if isinstance(entity, Shot):  # similar to if (entity is Enemy) from c#
