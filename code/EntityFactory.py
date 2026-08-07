@@ -1,7 +1,8 @@
 import random
 
 from code.Block import Block
-from code.Const import WINDOW_SIZE, MAP_TOPLEFT, MAP_BOTTOMRIGHT, MAP_SIZE, MAP_STAGE1, BLOCK_REF
+from code.Const import WINDOW_SIZE, MAP_TOPLEFT, MAP_BOTTOMRIGHT, MAP_SIZE, MAP_UNINTER, BLOCK_REF, MAP_ORIGINAL, \
+    MAP_ARENA, MAP_MAZE
 from code.Enemy import Enemy
 from code.Player import Player
 
@@ -12,7 +13,16 @@ class EntityFactory:
     def get_entity(entity_name: str):
         match entity_name:
             case 'stage1':
-                block_map = MAP_STAGE1
+                block_map = MAP_UNINTER
+                return generate_block_list(block_map)
+            case 'stage2':
+                block_map = MAP_ORIGINAL
+                return generate_block_list(block_map)
+            case 'stage3':
+                block_map = MAP_ARENA
+                return generate_block_list(block_map)
+            case 'stage4':
+                block_map = MAP_MAZE
                 return generate_block_list(block_map)
             case 'player1':
                 return Player(player_name='player1', position=(MAP_BOTTOMRIGHT[0] / 2 - 65, MAP_BOTTOMRIGHT[1] - 30))

@@ -123,6 +123,7 @@ class EntityMediator:
                     explosion_sfx = pygame.mixer.Sound(f'./assets/sounds/sfx/player_explosion.wav')
                     explosion_sfx.set_volume(0.4)
                     explosion_sfx.play()
+                    entity.channel.stop()
 
                 elif isinstance(entity, Enemy):
                     EntityMediator.__give_score(entity, entity_list)

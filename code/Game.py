@@ -23,20 +23,20 @@ class Game:
                 stage = Stage(self.window, 'stage1', menu_return, player_score)
                 stage_return = stage.run()
 
-                # if level_return:  # city 2
-                #     level = Stage(self.window, 'city2', menu_return, player_score)
-                #     level_return = level.run(player_score)
-                #
-                #     if level_return:  # city 3
-                #         level = Stage(self.window, 'city3', menu_return, player_score)
-                #         level_return = level.run(player_score)
-                #
-                #         if level_return:  # city 4
-                #             level = Stage(self.window, 'city4', menu_return, player_score)
-                #             level_return = level.run(player_score)
-                #
-                #             if level_return:  # end game
-                #                 scoreboard.save(menu_return, player_score)
+                if level_return:  # city 2
+                    level = Stage(self.window, 'stage2', menu_return, player_score)
+                    level_return = level.run(player_score)
+
+                    if level_return:  # city 3
+                        level = Stage(self.window, 'stage3', menu_return, player_score)
+                        level_return = level.run(player_score)
+
+                        if level_return:  # city 4
+                            level = Stage(self.window, 'stage', menu_return, player_score)
+                            level_return = level.run(player_score)
+
+                            if level_return:  # end game
+                                scoreboard.save(menu_return, player_score)
 
             if menu_return == MENU_OPTION[2]:  # construction
                 print('construction not implemented')

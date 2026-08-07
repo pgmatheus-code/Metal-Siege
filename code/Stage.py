@@ -34,6 +34,8 @@ class Stage:
         self.map_background = pygame.transform.scale(self.map_background, scale_tuple)
 
         # spawning
+        self.player1_lives = 2
+        self.player2_lives = 2
         self.entity_list: list[Entity] = []
         self.particle_group = pygame.sprite.Group()
 
@@ -42,7 +44,7 @@ class Stage:
         # player.score = player_score[0]
         self.entity_list.append(player)
 
-        if (game_mode == 'TWO PLAYERS'):
+        if game_mode == 'TWO PLAYERS':
             # player 2 instantiation
             player = EntityFactory.get_entity('player2')
             # player.score = player_score[0]
@@ -117,6 +119,29 @@ class Stage:
                             shoot_sfx = pygame.mixer.Sound(f'./assets/sounds/sfx/tank_shot.wav')
                             shoot_sfx.set_volume(0.4)
                             shoot_sfx.play()
+
+                found_player1 = False
+                found_player2 = False
+                for player_search in self.entity_list:
+                    if isinstance(player_search, Player) and player_search.name == 'player1':
+                        found_player1 = True
+                    if isinstance(player_search, Player) and player_search.name == 'player2':
+                        found_player2 = True
+
+                if not found_player1 and self.player1_lives > 0:
+                    self.player1_lives -= 1
+                    # player 1 resurrection
+                    player = EntityFactory.get_entity('player1')
+                    # player.score = player_score[0]
+                    self.entity_list.append(player)
+
+                if self.game_mode == 'TWO PLAYERS':
+                    if not found_player2 and self.player2_lives > 0:
+                        self.player1_lives -= 1
+                        # player 2 resurrection
+                        player = EntityFactory.get_entity('player2')
+                        # player.score = player_score[0]
+                        self.entity_list.append(player)
 
                 # player hud
                 # if entity.name == 'player1_ship':
