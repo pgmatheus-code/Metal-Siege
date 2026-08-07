@@ -67,6 +67,7 @@ class Enemy(MoveableEntity):
 
         # apply rotation
         if moved:
+            self.position = self.rect.topleft
             self.movement_timer = 60
             self.surf = pygame.transform.rotate(self.original_image, self.angle)
             self.rect = self.surf.get_rect(center=self.rect.center)

@@ -82,7 +82,7 @@ class Menu:
                 else:
                     color = C_BLACK
 
-                # menu opt pos
+                # menu opt position
                 menu_opt_x = (WINDOW_SIZE[0] / 2)
                 menu_opt_y = (MENU_HEIGHT + MENU_SPACING * i)
 

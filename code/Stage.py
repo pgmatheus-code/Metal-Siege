@@ -35,6 +35,7 @@ class Stage:
 
         # spawning
         self.entity_list: list[Entity] = []
+        self.particle_group = pygame.sprite.Group()
 
         # player 1 instantiation
         player = EntityFactory.get_entity('player1')
@@ -89,6 +90,10 @@ class Stage:
                 text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2) + 15,
                           WINDOW_SIZE[1] / 2 + 40)
             )
+
+            # draw explosions
+            self.particle_group.update()
+            self.particle_group.draw(self.window)
 
             # entity specific
             for entity in self.entity_list:
@@ -153,7 +158,7 @@ class Stage:
 
             # Entity mediator - entity damage and destruction
             EntityMediator.verify_collision(entity_list=self.entity_list)
-            EntityMediator.verify_health(entity_list=self.entity_list)
+            EntityMediator.verify_health(entity_list=self.entity_list, particle_group=self.particle_group)
 
     def level_text(self, font_path: str, text_size: int, text: str, text_color: tuple, text_pos: tuple):
         text_font: pygame.font.Font = pygame.font.Font(font_path, text_size)

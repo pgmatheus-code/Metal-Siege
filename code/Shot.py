@@ -5,7 +5,7 @@ class Shot(MoveableEntity):
     def __init__(self, shooter: str, position: tuple, direction: tuple):
         MoveableEntity.__init__(
             self,
-            entity_type='projectile',
+            entity_type='particle',
             name =f'shot_projectile',
             position=position,
             health=1,
