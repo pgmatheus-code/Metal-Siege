@@ -57,11 +57,11 @@ class Stage:
 
     def run(self):
         # Initialize mixer
-        # pygame.mixer.init()
+        pygame.mixer.init()
 
         # music
-        # pygame.mixer.music.load(f'./assets/sounds/{self.name}.mp3')
-        # pygame.mixer.music.play(-1)  # minus one for loop
+        pygame.mixer.music.load(f'./assets/sounds/game_start_theme.mp3')
+        pygame.mixer.music.play()  # minus one for loop
 
         # clock
         clock = pygame.time.Clock()
@@ -107,18 +107,11 @@ class Stage:
                     shot = entity.shoot()
                     if shot is not None:
                         self.entity_list.append(shot)
-                #
-                #         entity_formatted_name = ''
-                #
-                #         if entity.name in ['player1_ship', 'player2_ship']:
-                #             entity_formatted_name = entity.name[:-5]
-                #         elif entity.name[:3] == 'enemy':
-                #             entity_formatted_name = 'enemy'
-                #
-                #         if entity_formatted_name != '':
-                #             shoot_sfx = pygame.mixer.Sound(f'./assets/sounds/{entity_formatted_name}_shot.mp3')
-                #             shoot_sfx.set_volume(0.4)
-                #             shoot_sfx.play()
+
+                        if entity.name in ['player1', 'player2']:
+                            shoot_sfx = pygame.mixer.Sound(f'./assets/sounds/sfx/tank_shot.wav')
+                            shoot_sfx.set_volume(0.4)
+                            shoot_sfx.play()
 
                 # player hud
                 # if entity.name == 'player1_ship':

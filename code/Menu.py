@@ -106,6 +106,9 @@ class Menu:
                     pygame.quit()  # end pygame
                     sys.exit()  # close window
 
+                selection_sfx = pygame.mixer.Sound(f'./assets/sounds/sfx/hud_selection.wav')
+                selection_sfx.set_volume(0.4)
+
                 if event.type == KEYDOWN:
                     # directional events
                     if event.key == pygame.K_UP or event.key == pygame.K_w:
@@ -113,11 +116,13 @@ class Menu:
                             selected_option -= 1
                         else:
                             selected_option = len(MENU_OPTION) - 1
+                        selection_sfx.play()
                     elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
                         if selected_option < len(MENU_OPTION) - 1:
                             selected_option += 1
                         else:
                             selected_option = 0
+                        selection_sfx.play()
 
                     # enter events
                     if event.key == pygame.K_RETURN:

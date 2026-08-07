@@ -17,7 +17,15 @@ class Player(MoveableEntity):
             score=0,
             speed=PLAYER_SPEED
         )
+        # sound exclusive
+        self.movement_sfx = pygame.mixer.Sound('./assets/sounds/sfx/tank_moving.wav')
+        self.ready_sfx = pygame.mixer.Sound('./assets/sounds/sfx/tank_ready.wav')
+        self.movement_sfx.set_volume(0.4)
+        self.ready_sfx.set_volume(0.4)
+        self.channel = pygame.mixer.Channel(0)
+        self.is_moving = False
 
+        # other variables
         self.damage = 1
         self.movement_timer = 0
         self.is_movement_ready = False
@@ -59,10 +67,20 @@ class Player(MoveableEntity):
             moved = False
 
         # apply rotation
+
         if moved:
             self.movement_timer = 60
             self.surf = pygame.transform.rotate(self.original_image, self.angle)
             self.rect = self.surf.get_rect(center=self.rect.center)
+
+            if not self.is_moving:
+                self.channel.play(self.movement_sfx, loops=-1)
+                self.is_moving = True
+
+        elif not moved and self.is_moving:
+                self.channel.stop()
+                self.ready_sfx.play()
+                self.is_moving = False
 
     def shoot(self):
         player_name = self.name

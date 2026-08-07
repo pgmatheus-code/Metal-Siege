@@ -1,5 +1,7 @@
+import pygame
+
 from code.Block import Block
-from code.Const import WINDOW_SIZE, MAP_TOPLEFT, MAP_BOTTOMRIGHT
+from code.Const import WINDOW_SIZE, MAP_TOPLEFT, MAP_BOTTOMRIGHT, BLOCK_REF
 from code.Enemy import Enemy
 from code.Entity import Entity
 from code.MoveableEntity import MoveableEntity
@@ -107,5 +109,32 @@ class EntityMediator:
 
             if isinstance(entity, Enemy):
                 EntityMediator.__give_score(entity, entity_list)
+
+            if isinstance(entity, Player):
+                explosion_sfx = pygame.mixer.Sound(f'./assets/sounds/sfx/player_explosion.wav')
+                explosion_sfx.set_volume(0.4)
+                explosion_sfx.play()
+            elif isinstance(entity, Enemy):
+                explosion_sfx = pygame.mixer.Sound(f'./assets/sounds/sfx/enemy_explosion.wav')
+                explosion_sfx.set_volume(0.4)
+                explosion_sfx.play()
+            elif isinstance(entity, Shot) and entity.shooter.startswith('player'):
+                explosion_sfx = pygame.mixer.Sound(f'./assets/sounds/sfx/shot_collision.wav')
+                explosion_sfx.set_volume(0.4)
+                explosion_sfx.play()
+            elif isinstance(entity, Block) and entity.name == 'flag':
+                explosion_sfx = pygame.mixer.Sound(f'./assets/sounds/sfx/flag_destruction.wav')
+                explosion_sfx.set_volume(4)
+                explosion_sfx.play()
+
+                entity_list.append(Block(
+                    name=BLOCK_REF[4][0], # 'flag_destroyed'
+                    position= entity.position,
+                    health=100,
+                    score=entity.score,
+                    is_solid=BLOCK_REF[4][1],
+                    is_shootable=BLOCK_REF[4][2],
+                    is_damageable=BLOCK_REF[4][3],
+                ))
 
             entity_list.remove(entity)
