@@ -7,6 +7,7 @@ FONT_MAIN = './assets/fonts/acknowtt.ttf'
 C_BLACK = (0, 0, 0)
 C_GRAY = (127, 127, 127)
 C_WHITE = (255, 255, 255)
+C_RED = (200, 0, 0)
 
 # shadow
 SHADOW_COLOR = C_GRAY
@@ -47,7 +48,7 @@ SPAWN_CHECK_INTERVAL = 1000
 ENEMY_SPAWN_EVENT = pygame.USEREVENT + 1
 
 # game_over event
-STAGE_END_CHECK_INTERVAL = 1000
+STAGE_END_CHECK_INTERVAL = 2000
 STAGE_END_EVENT = pygame.USEREVENT + 2
 
 ENEMY_AMOUNT = 20 # ideal 20

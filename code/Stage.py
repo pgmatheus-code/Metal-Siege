@@ -6,7 +6,7 @@ from pygame import Surface, Rect
 from code.Block import Block
 from code.Const import SHADOW_DIRECTION, SHADOW_COLOR, FONT_MAIN, C_WHITE, WINDOW_SIZE, MAP_BOTTOMRIGHT, \
     MAP_TOPLEFT, LEVEL_FPS, STAGE_END_EVENT, STAGE_END_CHECK_INTERVAL, TIMEOUT_STEP, ENEMY_AMOUNT, ENEMY_AT_ONCE, \
-    ENEMY_SPAWN_EVENT
+    ENEMY_SPAWN_EVENT, C_RED
 from code.Enemy import Enemy
 from code.Entity import Entity
 from code.EntityFactory import EntityFactory
@@ -107,7 +107,7 @@ class Stage:
             )
 
             # players hud -----------------------------------------------------------------
-            self.level_text( # PLAYER 1
+            self.level_text(  # PLAYER 1
                 font_path=FONT_MAIN,
                 text_size=30,
                 text='P1',
@@ -144,7 +144,7 @@ class Stage:
                     )
 
             if self.game_mode == 'TWO PLAYERS':
-                self.level_text( # PLAYER 2
+                self.level_text(  # PLAYER 2
                     font_path=FONT_MAIN,
                     text_size=30,
                     text='P2',
@@ -178,7 +178,6 @@ class Stage:
                             text_pos=(WINDOW_SIZE[0] / 2 + 130,
                                       12)
                         )
-
 
             # draw explosions
             self.particle_group.update()
@@ -219,7 +218,7 @@ class Stage:
                     found_player2 = True
 
             # resurrection
-            if not found_player1 and self.player1_lives > 0: # player 1
+            if not found_player1 and self.player1_lives > 0:  # player 1
                 self.player1_lives -= 1
                 # player 1 resurrection
                 player = EntityFactory.get_entity('player1')
@@ -227,7 +226,7 @@ class Stage:
                 self.entity_list.append(player)
 
             if self.game_mode == 'TWO PLAYERS':
-                if not found_player2 and self.player2_lives > 0: # player 2
+                if not found_player2 and self.player2_lives > 0:  # player 2
                     self.player2_lives -= 1
                     # player 2 resurrection
                     player = EntityFactory.get_entity('player2')
@@ -271,13 +270,11 @@ class Stage:
                         pygame.time.set_timer(STAGE_END_EVENT, TIMEOUT_STEP)
 
                 if event.type == STAGE_END_EVENT:
-                    print(f'Timeout: {self.check_endgame_timer}/{STAGE_END_CHECK_INTERVAL}')
 
                     if self.check_endgame_timer > 0:
                         # subtract time from timeout
                         self.check_endgame_timer -= TIMEOUT_STEP
                     else:
-
                         # pass score
                         for entity in self.entity_list:
                             if isinstance(entity, Player) and entity.name == 'player1':
@@ -289,6 +286,27 @@ class Stage:
                         pygame.time.set_timer(STAGE_END_EVENT, 0)
                         return not self.game_over
 
+            # GAME OVER text
+            if self.game_over and self.check_endgame_timer < STAGE_END_CHECK_INTERVAL * (7/8):
+
+                timeout_value = self.check_endgame_timer - 1000 if self.check_endgame_timer > 1000 else 0
+                pos_x = MAP_BOTTOMRIGHT[0] / 2
+                pos_y = MAP_BOTTOMRIGHT[1] / 2 + timeout_value
+
+                self.level_text(
+                    font_path=FONT_MAIN,
+                    text_size=70,
+                    text='GAME',
+                    text_color=C_RED,
+                    text_pos=(pos_x, pos_y - 20)
+                )
+                self.level_text(
+                    font_path=FONT_MAIN,
+                    text_size=70,
+                    text='OVER',
+                    text_color=C_RED,
+                    text_pos=(pos_x, pos_y + 20)
+                )
 
             # update display
             pygame.display.flip()
