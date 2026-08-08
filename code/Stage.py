@@ -5,7 +5,8 @@ from pygame import Surface, Rect
 
 from code.Block import Block
 from code.Const import SHADOW_DIRECTION, SHADOW_COLOR, FONT_MAIN, C_WHITE, WINDOW_SIZE, MAP_BOTTOMRIGHT, \
-    MAP_TOPLEFT, LEVEL_FPS
+    MAP_TOPLEFT, LEVEL_FPS, STAGE_END_EVENT, STAGE_END_CHECK_INTERVAL, TIMEOUT_STEP, ENEMY_AMOUNT, ENEMY_AT_ONCE, \
+    ENEMY_SPAWN_EVENT
 from code.Enemy import Enemy
 from code.Entity import Entity
 from code.EntityFactory import EntityFactory
@@ -23,6 +24,7 @@ class Stage:
         self.name = name
         self.game_mode = game_mode
         self.game_over = False
+        self.check_endgame_timer = STAGE_END_CHECK_INTERVAL
 
         # hud background
         self.hud_background = pygame.image.load('./assets/sprites/main_menu/main_menu_background.png').convert_alpha()
@@ -38,6 +40,7 @@ class Stage:
         # spawning
         self.player1_lives = 3
         self.player2_lives = 3
+        self.enemy_lives = ENEMY_AMOUNT
         self.entity_list: list[Entity] = []
         self.particle_group = pygame.sprite.Group()
 
@@ -53,12 +56,14 @@ class Stage:
             self.entity_list.append(player)
 
         # example enemy instantiation
-        for i in range(2):
-            enemy = EntityFactory.get_entity('enemy')
-            self.entity_list.append(enemy)
+        # for i in range(2):
+        #     enemy = EntityFactory.get_entity('enemy')
+        #     self.entity_list.append(enemy)
 
         # map blocks instantiation
         self.entity_list.extend(EntityFactory.get_entity(name))
+
+        pygame.time.set_timer(ENEMY_SPAWN_EVENT, TIMEOUT_STEP)
 
     def run(self):
         # Initialize mixer
@@ -119,19 +124,16 @@ class Stage:
             self.particle_group.update()
             self.particle_group.draw(self.window)
 
-            # entity specific
+            # move and shot
             for entity in self.entity_list:
                 # apply drawing
                 self.window.blit(source=entity.surf, dest=entity.rect)
-
                 # move each stuff
                 if isinstance(entity, MoveableEntity):
                     if not self.game_over or (self.game_over and not isinstance(entity, Player)):
                         entity.move()
-
                         if not isinstance(entity, Shot):
                             EntityMediator.check_collision_after_movement(entity, self.entity_list)
-
                 # shot
                 if isinstance(entity, (Player, Enemy)):
                     if not self.game_over or (self.game_over and not isinstance(entity, Player)):
@@ -144,46 +146,89 @@ class Stage:
                                 shoot_sfx.set_volume(0.4)
                                 shoot_sfx.play()
 
-                found_player1 = False
-                found_player2 = False
-                for player_search in self.entity_list:
-                    if isinstance(player_search, Player) and player_search.name == 'player1':
-                        found_player1 = True
-                    if isinstance(player_search, Player) and player_search.name == 'player2':
-                        found_player2 = True
+            # player detection
+            found_player1 = False
+            found_player2 = False
 
-                # game over condition or resurrection
-                if not found_player1 and self.player1_lives > 0:
-                    self.player1_lives -= 1
-                    # player 1 resurrection
-                    player = EntityFactory.get_entity('player1')
+            for moveable_search in self.entity_list:
+                if not isinstance(moveable_search, MoveableEntity):
+                    continue
+                if isinstance(moveable_search, Player) and moveable_search.name == 'player1':
+                    found_player1 = True
+                if isinstance(moveable_search, Player) and moveable_search.name == 'player2':
+                    found_player2 = True
+
+            # resurrection
+            if not found_player1 and self.player1_lives > 0: # player 1
+                self.player1_lives -= 1
+                # player 1 resurrection
+                player = EntityFactory.get_entity('player1')
+                # player.score = player_score[0]
+                self.entity_list.append(player)
+
+            if self.game_mode == 'TWO PLAYERS':
+                if not found_player2 and self.player2_lives > 0: # player 2
+                    self.player2_lives -= 1
+                    # player 2 resurrection
+                    player = EntityFactory.get_entity('player2')
                     # player.score = player_score[0]
                     self.entity_list.append(player)
 
-                if self.game_mode == 'TWO PLAYERS':
-                    if not found_player2 and self.player2_lives > 0:
-                        self.player2_lives -= 1
-                        # player 2 resurrection
-                        player = EntityFactory.get_entity('player2')
-                        # player.score = player_score[0]
-                        self.entity_list.append(player)
+            # flag detection
+            found_flag = False
+            for flag_search in self.entity_list:
+                if isinstance(flag_search, Block) and flag_search.name == 'flag':
+                    found_flag = True
 
-                found_flag = False
-                for flag_search in self.entity_list:
-                    if isinstance(flag_search, Block) and flag_search.name == 'flag':
-                        found_flag = True
-
-                if (not found_player2 and not found_player1) or not found_flag:
-                    self.game_over = True
-                else:
-                    self.game_over = False
+            # loss condition
+            if (not found_player2 and not found_player1) or not found_flag:
+                self.game_over = True
+                pygame.time.set_timer(STAGE_END_EVENT, TIMEOUT_STEP)
+            else:
+                self.game_over = False
+                pygame.time.set_timer(STAGE_END_EVENT, 0)
 
             # get any pygame event
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    # standard quit event (to avoid window freeze)
                     pygame.quit()
                     sys.exit()
+                if event.type == ENEMY_SPAWN_EVENT:
+                    current_enemy_amount = 0
+
+                    for moveable_search in self.entity_list:
+                        if isinstance(moveable_search, Enemy):
+                            current_enemy_amount += 1
+
+                    if current_enemy_amount < ENEMY_AT_ONCE:
+                        if self.enemy_lives > 0:
+                            self.enemy_lives -= 1
+                            # enemy resurrection
+                            enemy = EntityFactory.get_entity('enemy')
+                            # player.score = player_score[0]
+                            self.entity_list.append(enemy)
+                    if current_enemy_amount == 0 and self.enemy_lives == 0:
+                        pygame.time.set_timer(STAGE_END_EVENT, TIMEOUT_STEP)
+
+                if event.type == STAGE_END_EVENT:
+                    print(f'Timeout: {self.check_endgame_timer}/{STAGE_END_CHECK_INTERVAL}')
+
+                    if self.check_endgame_timer > 0:
+                        # subtract time from timeout
+                        self.check_endgame_timer -= TIMEOUT_STEP
+                    else:
+
+                        # pass score
+                        # for entity in self.entity_list:
+                        #     if isinstance(entity, Player) and entity.name == 'player1_ship':
+                        #         player_score[0] = entity.score
+                        #     elif isinstance(entity, Player) and entity.name == 'player2_ship':
+                        #         player_score[1] = entity.score
+
+                        # jump to the next stage or end game
+                        pygame.time.set_timer(STAGE_END_EVENT, 0)
+                        return not self.game_over
+
 
             # update display
             pygame.display.flip()
