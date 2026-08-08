@@ -59,6 +59,12 @@ ENEMY_HEALTH = {
     'enemy3' : 500,
 }
 
+ENEMY_SCORE = {
+    'enemy1' : 100,
+    'enemy2' : 200,
+    'enemy3' : 500,
+}
+
 ENEMY_SPEED = {
     'enemy1' : 40,
     'enemy2' : 30,
@@ -110,14 +116,14 @@ KEY_SHOOT = \
         'player2': pygame.K_KP_PLUS
     }
 
-BLOCK_REF = [ # (name, is_solid, is_shootable, is_damageable)
-    ('none', False, False, False),                  #0
-    ('armored', True, True, False),                 #1
-    ('brick', True, True, True),                    #2
-    ('flag', True, True, True),                     #3
-    ('flag_destroyed', False, False, False),        #4
-    ('bush', False, False, False),                  #5
-    ('water', True, False, False)                   #6
+BLOCK_REF = [ # (name, is_solid, is_shootable, is_damageable, score)
+    ('none', False, False, False, 0),                  #0
+    ('armored', True, True, False, 0),                 #1
+    ('brick', True, True, True, 50),                   #2
+    ('flag', True, True, True, 0),                     #3
+    ('flag_destroyed', False, False, False, 0),        #4
+    ('bush', False, False, False, 0),                  #5
+    ('water', True, False, False, 0)                   #6
 ]
 
 MAP_SIZE = (21, 13)

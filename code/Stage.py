@@ -75,10 +75,11 @@ class Stage:
         while True:
             clock.tick(LEVEL_FPS)
 
-            # generic hud
+            # generic hud ---------------------------------------------------
             self.window.blit(source=self.hud_background, dest=self.hud_rect)
             self.window.blit(source=self.map_background, dest=self.map_rect)
 
+            # enemy_lives ---------------------------------------------------
             self.level_text(
                 font_path=FONT_MAIN,
                 text_size=25,
@@ -95,9 +96,7 @@ class Stage:
                 text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2),
                           MAP_TOPLEFT[1] + 25)
             )
-
             enemy_text = self.get_enemy_lives_text(self.enemy_lives)
-
             self.level_break_line_text(
                 font_path=FONT_MAIN,
                 text_size=30,
@@ -107,7 +106,8 @@ class Stage:
                           MAP_TOPLEFT[1] + 45)
             )
 
-            self.level_text(
+            # players hud -----------------------------------------------------------------
+            self.level_text( # PLAYER 1
                 font_path=FONT_MAIN,
                 text_size=30,
                 text='P1',
@@ -115,16 +115,6 @@ class Stage:
                 text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2),
                           MAP_TOPLEFT[1] + 230)
             )
-            if self.game_mode == 'TWO PLAYERS':
-                self.level_text(
-                    font_path=FONT_MAIN,
-                    text_size=30,
-                    text='P2',
-                    text_color=C_WHITE,
-                    text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2),
-                              MAP_TOPLEFT[1] + 320)
-                )
-
             self.level_text(
                 font_path=FONT_MAIN,
                 text_size=30,
@@ -134,7 +124,34 @@ class Stage:
                           MAP_TOPLEFT[1] + 250)
             )
 
+            self.level_text(
+                font_path=FONT_MAIN,
+                text_size=30,
+                text='P1 SCORE: ',
+                text_color=C_WHITE,
+                text_pos=(100,
+                          12)
+            )
+            for player in self.entity_list:
+                if isinstance(player, Player) and player.name == 'player1':
+                    self.level_text(
+                        font_path=FONT_MAIN,
+                        text_size=30,
+                        text=f'{player.score:05d}',
+                        text_color=C_WHITE,
+                        text_pos=(210,
+                                  12)
+                    )
+
             if self.game_mode == 'TWO PLAYERS':
+                self.level_text( # PLAYER 2
+                    font_path=FONT_MAIN,
+                    text_size=30,
+                    text='P2',
+                    text_color=C_WHITE,
+                    text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2),
+                              MAP_TOPLEFT[1] + 320)
+                )
                 self.level_text(
                     font_path=FONT_MAIN,
                     text_size=30,
@@ -143,6 +160,25 @@ class Stage:
                     text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2),
                               MAP_TOPLEFT[1] + 340)
                 )
+                self.level_text(
+                    font_path=FONT_MAIN,
+                    text_size=30,
+                    text='P2 SCORE: ',
+                    text_color=C_WHITE,
+                    text_pos=(WINDOW_SIZE[0] / 2 + 20,
+                              12)
+                )
+                for player in self.entity_list:
+                    if isinstance(player, Player) and player.name == 'player2':
+                        self.level_text(
+                            font_path=FONT_MAIN,
+                            text_size=30,
+                            text=f'{player.score:05d}',
+                            text_color=C_WHITE,
+                            text_pos=(WINDOW_SIZE[0] / 2 + 130,
+                                      12)
+                        )
+
 
             # draw explosions
             self.particle_group.update()

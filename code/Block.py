@@ -11,10 +11,10 @@ class Block(Entity):
             name= name,
             position= position,
             health= health,
-            score= score
+            score=score
         )
         self.damage = 1
-
         self.is_solid = is_solid # passed by tanks
         self.is_shootable = is_shootable # passed by shots
         self.is_damageable = is_damageable # loss health
+

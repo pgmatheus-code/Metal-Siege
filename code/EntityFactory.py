@@ -59,6 +59,7 @@ def generate_block_list(block_map: list[int]):
             is_solid = BLOCK_REF[block_id][1]
             is_shootable = BLOCK_REF[block_id][2]
             is_damageable = BLOCK_REF[block_id][3]
+            score = BLOCK_REF[block_id][4]
 
             block_size = 32
             pos_x = i * block_size
@@ -71,7 +72,7 @@ def generate_block_list(block_map: list[int]):
                         name=f'{block_name}',
                         position=position,
                         health=100,
-                        score=50,
+                        score=score,
                         is_solid= is_solid,
                         is_shootable= is_shootable,
                         is_damageable= is_damageable

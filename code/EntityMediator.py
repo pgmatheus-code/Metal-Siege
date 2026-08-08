@@ -63,11 +63,11 @@ class EntityMediator:
 
     @staticmethod
     def __give_score(enemy: Entity, entity_list: list[Entity]):
-        if enemy.last_dmg == 'player1_shot':
+        if enemy.last_dmg == 'player1':
             for entity in entity_list:
                 if entity.name == 'player1':
                     entity.score += enemy.score
-        elif enemy.last_dmg == 'player2_shot':
+        elif enemy.last_dmg == 'player2':
             for entity in entity_list:
                 if entity.name == 'player2':
                     entity.score += enemy.score
@@ -95,13 +95,15 @@ class EntityMediator:
             ):
                 # entity2 damages entity1
                 if not isinstance(entity1, Block) or isinstance(entity1, Block) and entity1.is_damageable:
-                    entity1.last_dmg = entity2.name
                     entity1.health -= entity2.damage
+                    if isinstance(entity2, Shot):
+                        entity1.last_dmg = entity2.shooter
 
                 # entity1 damages entity2
                 if not isinstance(entity2, Block) or isinstance(entity2, Block) and entity2.is_damageable:
-                    entity2.last_dmg = entity1.name
                     entity2.health -= entity1.damage
+                    if isinstance(entity1, Shot):
+                        entity2.last_dmg = entity1.shooter
 
     @staticmethod
     def verify_health(entity_list: list[Entity], particle_group: pygame.sprite.Group):
@@ -129,7 +131,7 @@ class EntityMediator:
                             name=BLOCK_REF[4][0], # 'flag_destroyed'
                             position= entity.position,
                             health=100,
-                            score=entity.score,
+                            score=0,
                             is_solid=BLOCK_REF[4][1],
                             is_shootable=BLOCK_REF[4][2],
                             is_damageable=BLOCK_REF[4][3],
@@ -139,6 +141,8 @@ class EntityMediator:
                             if isinstance(player, Player):
                                 player.is_dead = True
                                 player.channel.stop()
+                    else:
+                        EntityMediator.__give_score(entity, entity_list)
 
                 if isinstance(entity, Player):
                     explosion_sfx = pygame.mixer.Sound(f'./assets/sounds/sfx/player_explosion.wav')

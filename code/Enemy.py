@@ -4,7 +4,7 @@ import pygame
 
 from code.Const import PLAYER_SHOT_DELAY, KEY_LEFT, PLAYER_SPEED, KEY_RIGHT, KEY_UP, \
     KEY_DOWN, KEY_SHOOT, MAP_TOPLEFT, MAP_BOTTOMRIGHT, ENEMY_SHOT_DELAY, ENEMY_HEALTH, ENEMY_SPEED, \
-    ENEMY_RANDOM_MOVEMENT_DELAY
+    ENEMY_RANDOM_MOVEMENT_DELAY, ENEMY_SCORE
 from code.MoveableEntity import MoveableEntity
 from code.Shot import Shot
 
@@ -17,7 +17,7 @@ class Enemy(MoveableEntity):
             name=name,
             position=position,
             health=ENEMY_HEALTH[name],
-            score=0,
+            score=ENEMY_SCORE[name],
             speed=ENEMY_SPEED[name]
         )
 
