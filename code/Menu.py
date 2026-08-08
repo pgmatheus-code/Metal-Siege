@@ -20,7 +20,7 @@ class Menu:
         self.rect = self.background.get_rect(topleft=(0, 0))
 
 
-    def run(self, ):
+    def run(self):
         selected_option = 0
 
         # music

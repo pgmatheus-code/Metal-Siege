@@ -27,7 +27,7 @@ MENU_OPTION_SIZE = 70
 MENU_OPTION = (
     'ONE PLAYER',
     'TWO PLAYERS',
-    'CONSTRUCTION',
+    'CONTROLS',
     'QUIT'
 )
 
