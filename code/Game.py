@@ -23,19 +23,19 @@ class Game:
 
                 # stage 1
                 stage1 = Stage(self.window, 'stage1', menu_return, player_score)
-                stage_return = stage1.run()
+                stage_return = stage1.run(player_score)
 
                 if stage_return:  # stage 2
                     stage2 = Stage(self.window, 'stage2', menu_return, player_score)
-                    stage_return = stage2.run()#player_score)
+                    stage_return = stage2.run(player_score)
 
                     if stage_return:  # stage 3
                         stage3 = Stage(self.window, 'stage3', menu_return, player_score)
-                        stage_return = stage3.run()#player_score)
+                        stage_return = stage3.run(player_score)
 
                         if stage_return:  # stage 4
                             level4 = Stage(self.window, 'stage4', menu_return, player_score)
-                            stage_return = level4.run()#player_score)
+                            stage_return = level4.run(player_score)
 
                             # if stage_return:  # end game
                             #     scoreboard.save(menu_return, player_score)

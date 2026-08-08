@@ -78,11 +78,11 @@ class EntityMediator:
         # avoid friendly fire
         is_interaction_valid = False
         if (
-                (isinstance(entity1, Player) and isinstance(entity2, Shot)) and entity2.shooter != entity1.name or
-                (isinstance(entity1, Shot) and isinstance(entity2, Player)) and entity1.shooter != entity2.name or
-                (isinstance(entity1, Enemy) and isinstance(entity2, Shot)) and entity2.shooter != entity1.name or
-                (isinstance(entity1, Shot) and isinstance(entity2, Enemy)) and entity1.shooter != entity2.name or
-                (isinstance(entity1, Block) and entity1.is_shootable and isinstance(entity2, Shot)) or
+                (isinstance(entity1, Player) and isinstance(entity2, Shot)) and not entity2.shooter.startswith(entity1.name) or
+                (isinstance(entity1, Shot) and isinstance(entity2, Player)) and not entity1.shooter.startswith(entity2.name) or
+                (isinstance(entity1, Enemy) and isinstance(entity2, Shot)) and not entity2.shooter.startswith(entity1.name[:-1]) or
+                (isinstance(entity1, Shot) and isinstance(entity2, Enemy)) and not entity1.shooter.startswith(entity2.name[:-1]) or
+                (isinstance(entity1, Block) and isinstance(entity2, Shot)) and entity1.is_shootable or
                 (isinstance(entity1, Shot) and isinstance(entity2, Block))  and entity2.is_shootable
         ):
             is_interaction_valid = True
@@ -119,19 +119,7 @@ class EntityMediator:
                 explosion = Explosion(entity.position)
                 particle_group.add(explosion)
 
-                if isinstance(entity, Player):
-                    explosion_sfx = pygame.mixer.Sound(f'./assets/sounds/sfx/player_explosion.wav')
-                    explosion_sfx.set_volume(0.4)
-                    explosion_sfx.play()
-                    entity.channel.stop()
-
-                elif isinstance(entity, Enemy):
-                    EntityMediator.__give_score(entity, entity_list)
-                    explosion_sfx = pygame.mixer.Sound(f'./assets/sounds/sfx/enemy_explosion.wav')
-                    explosion_sfx.set_volume(0.4)
-                    explosion_sfx.play()
-
-                elif isinstance(entity, Block):
+                if isinstance(entity, Block):
                     if entity.name == 'flag':
                         explosion_sfx = pygame.mixer.Sound(f'./assets/sounds/sfx/flag_destruction.wav')
                         explosion_sfx.set_volume(4)
@@ -146,5 +134,23 @@ class EntityMediator:
                             is_shootable=BLOCK_REF[4][2],
                             is_damageable=BLOCK_REF[4][3],
                         ))
+
+                        for player in entity_list:
+                            if isinstance(player, Player):
+                                player.is_dead = True
+                                player.channel.stop()
+
+                if isinstance(entity, Player):
+                    explosion_sfx = pygame.mixer.Sound(f'./assets/sounds/sfx/player_explosion.wav')
+                    explosion_sfx.set_volume(0.4)
+                    explosion_sfx.play()
+                    entity.is_dead = True
+                    entity.channel.stop()
+
+                elif isinstance(entity, Enemy):
+                    EntityMediator.__give_score(entity, entity_list)
+                    explosion_sfx = pygame.mixer.Sound(f'./assets/sounds/sfx/enemy_explosion.wav')
+                    explosion_sfx.set_volume(0.4)
+                    explosion_sfx.play()
 
             entity_list.remove(entity)

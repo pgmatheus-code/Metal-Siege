@@ -24,6 +24,7 @@ class Player(MoveableEntity):
         self.ready_sfx.set_volume(0.4)
         self.channel = pygame.mixer.Channel(0)
         self.is_moving = False
+        self.is_dead = False
 
         # other variables
         self.damage = 1
@@ -35,6 +36,8 @@ class Player(MoveableEntity):
         self.original_image = self.surf
 
     def move(self):
+        if self.is_dead: return
+
         pressed_key = pygame.key.get_pressed()
         player_name = self.name
         moved = False

@@ -46,26 +46,21 @@ class Stage:
 
         # player 1 instantiation
         player = EntityFactory.get_entity('player1')
-        # player.score = player_score[0]
+        player.score = player_score[0]
         self.entity_list.append(player)
 
         if game_mode == 'TWO PLAYERS':
             # player 2 instantiation
             player = EntityFactory.get_entity('player2')
-            # player.score = player_score[0]
+            player.score = player_score[0]
             self.entity_list.append(player)
-
-        # example enemy instantiation
-        # for i in range(2):
-        #     enemy = EntityFactory.get_entity('enemy')
-        #     self.entity_list.append(enemy)
 
         # map blocks instantiation
         self.entity_list.extend(EntityFactory.get_entity(name))
 
         pygame.time.set_timer(ENEMY_SPAWN_EVENT, TIMEOUT_STEP)
 
-    def run(self):
+    def run(self, player_score):
         # Initialize mixer
         pygame.mixer.init()
 
@@ -83,13 +78,42 @@ class Stage:
             # generic hud
             self.window.blit(source=self.hud_background, dest=self.hud_rect)
             self.window.blit(source=self.map_background, dest=self.map_rect)
+
+            self.level_text(
+                font_path=FONT_MAIN,
+                text_size=25,
+                text='Enemies',
+                text_color=C_WHITE,
+                text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2),
+                          MAP_TOPLEFT[1] + 10)
+            )
+            self.level_text(
+                font_path=FONT_MAIN,
+                text_size=25,
+                text='left',
+                text_color=C_WHITE,
+                text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2),
+                          MAP_TOPLEFT[1] + 25)
+            )
+
+            enemy_text = self.get_enemy_lives_text(self.enemy_lives)
+
+            self.level_break_line_text(
+                font_path=FONT_MAIN,
+                text_size=30,
+                text=enemy_text,
+                text_color=C_WHITE,
+                text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2),
+                          MAP_TOPLEFT[1] + 45)
+            )
+
             self.level_text(
                 font_path=FONT_MAIN,
                 text_size=30,
                 text='P1',
                 text_color=C_WHITE,
-                text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2) + 15,
-                          WINDOW_SIZE[1] / 2 - 40)
+                text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2),
+                          MAP_TOPLEFT[1] + 230)
             )
             if self.game_mode == 'TWO PLAYERS':
                 self.level_text(
@@ -97,8 +121,8 @@ class Stage:
                     text_size=30,
                     text='P2',
                     text_color=C_WHITE,
-                    text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2) + 15,
-                              WINDOW_SIZE[1] / 2 + 40)
+                    text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2),
+                              MAP_TOPLEFT[1] + 320)
                 )
 
             self.level_text(
@@ -106,8 +130,8 @@ class Stage:
                 text_size=30,
                 text=self.player1_lives * 'I',
                 text_color=C_WHITE,
-                text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2) + 15,
-                          WINDOW_SIZE[1] / 2 - 20)
+                text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2),
+                          MAP_TOPLEFT[1] + 250)
             )
 
             if self.game_mode == 'TWO PLAYERS':
@@ -116,8 +140,8 @@ class Stage:
                     text_size=30,
                     text=self.player2_lives * 'I',
                     text_color=C_WHITE,
-                    text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2) + 15,
-                              WINDOW_SIZE[1] / 2 + 60)
+                    text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2),
+                              MAP_TOPLEFT[1] + 340)
                 )
 
             # draw explosions
@@ -219,11 +243,11 @@ class Stage:
                     else:
 
                         # pass score
-                        # for entity in self.entity_list:
-                        #     if isinstance(entity, Player) and entity.name == 'player1_ship':
-                        #         player_score[0] = entity.score
-                        #     elif isinstance(entity, Player) and entity.name == 'player2_ship':
-                        #         player_score[1] = entity.score
+                        for entity in self.entity_list:
+                            if isinstance(entity, Player) and entity.name == 'player1':
+                                player_score[0] = entity.score
+                            elif isinstance(entity, Player) and entity.name == 'player2':
+                                player_score[1] = entity.score
 
                         # jump to the next stage or end game
                         pygame.time.set_timer(STAGE_END_EVENT, 0)
@@ -250,3 +274,34 @@ class Stage:
         text_surface: Surface = text_font.render(text, True, text_color).convert_alpha()
         text_rect: Rect = text_surface.get_rect(center=text_pos)
         self.window.blit(source=text_surface, dest=text_rect)
+
+    def get_enemy_lives_text(self, enemy_lives: int) -> str:
+        # Build a string with enemy_lives copies of "I"
+        lives_string = "I" * enemy_lives
+
+        # Break into chunks of 5
+        lines = [lives_string[i:i + 5] for i in range(0, len(lives_string), 5)]
+
+        # Join with newline so your text renderer breaks lines
+        return "\n".join(lines)
+
+    def level_break_line_text(self, font_path: str, text_size: int, text: str, text_color: tuple, text_pos: tuple):
+        text_font: pygame.font.Font = pygame.font.Font(font_path, text_size)
+
+        lines = text.split("\n")
+        line_height = text_font.get_linesize()
+
+        for i, line in enumerate(lines):
+            y = text_pos[1] + i * line_height
+
+            # shadow
+            shadow_surface = text_font.render(line, True, SHADOW_COLOR).convert_alpha()
+            shadow_rect = shadow_surface.get_rect(
+                center=(text_pos[0] + SHADOW_DIRECTION[0], y + SHADOW_DIRECTION[1])
+            )
+            self.window.blit(shadow_surface, shadow_rect)
+
+            # main
+            text_surface = text_font.render(line, True, text_color).convert_alpha()
+            text_rect = text_surface.get_rect(center=(text_pos[0], y))
+            self.window.blit(text_surface, text_rect)
