@@ -33,16 +33,20 @@ class EntityFactory:
             case 'enemy':
                 random_enemy = random.choice(['enemy1', 'enemy2', 'enemy3'])
                 spawn_pos = [
-                    (MAP_TOPLEFT[0], MAP_TOPLEFT[1]),               #top_left
-                    (MAP_BOTTOMRIGHT[0] / 2 - 32, MAP_TOPLEFT[1]),  #top_center
-                    (MAP_BOTTOMRIGHT[0] - 32, MAP_TOPLEFT[1])       #top_right
+                    (MAP_TOPLEFT[0], MAP_TOPLEFT[1]),
+                    (MAP_BOTTOMRIGHT[0] - 32, MAP_TOPLEFT[1]),
+                    (MAP_BOTTOMRIGHT[0] / 2 - 32, MAP_TOPLEFT[1]),
+                    (MAP_BOTTOMRIGHT[0] / 1.5 - 32, MAP_TOPLEFT[1]),
+                    (MAP_BOTTOMRIGHT[0] / 2.5 - 32, MAP_TOPLEFT[1])
                 ]
+
+                pos_index = EntityFactory.last_enemy_spawn_pos_index
+
                 if EntityFactory.last_enemy_spawn_pos_index < len(spawn_pos) - 1:
                     EntityFactory.last_enemy_spawn_pos_index += 1
                 else:
                     EntityFactory.last_enemy_spawn_pos_index = 0
 
-                pos_index = EntityFactory.last_enemy_spawn_pos_index
                 return Enemy(name= random_enemy, position= spawn_pos[pos_index])
         return None
 
