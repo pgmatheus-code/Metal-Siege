@@ -3,6 +3,7 @@ import sys
 import pygame
 from pygame import Surface, Rect
 
+from code.Block import Block
 from code.Const import SHADOW_DIRECTION, SHADOW_COLOR, FONT_MAIN, C_WHITE, WINDOW_SIZE, MAP_BOTTOMRIGHT, \
     MAP_TOPLEFT, LEVEL_FPS
 from code.Enemy import Enemy
@@ -21,6 +22,7 @@ class Stage:
         self.window = window
         self.name = name
         self.game_mode = game_mode
+        self.game_over = False
 
         # hud background
         self.hud_background = pygame.image.load('./assets/sprites/main_menu/main_menu_background.png').convert_alpha()
@@ -34,8 +36,8 @@ class Stage:
         self.map_background = pygame.transform.scale(self.map_background, scale_tuple)
 
         # spawning
-        self.player1_lives = 2
-        self.player2_lives = 2
+        self.player1_lives = 3
+        self.player2_lives = 3
         self.entity_list: list[Entity] = []
         self.particle_group = pygame.sprite.Group()
 
@@ -84,14 +86,34 @@ class Stage:
                 text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2) + 15,
                           WINDOW_SIZE[1] / 2 - 40)
             )
+            if self.game_mode == 'TWO PLAYERS':
+                self.level_text(
+                    font_path=FONT_MAIN,
+                    text_size=30,
+                    text='P2',
+                    text_color=C_WHITE,
+                    text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2) + 15,
+                              WINDOW_SIZE[1] / 2 + 40)
+                )
+
             self.level_text(
                 font_path=FONT_MAIN,
                 text_size=30,
-                text='P2',
+                text=self.player1_lives * 'I',
                 text_color=C_WHITE,
                 text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2) + 15,
-                          WINDOW_SIZE[1] / 2 + 40)
+                          WINDOW_SIZE[1] / 2 - 20)
             )
+
+            if self.game_mode == 'TWO PLAYERS':
+                self.level_text(
+                    font_path=FONT_MAIN,
+                    text_size=30,
+                    text=self.player2_lives * 'I',
+                    text_color=C_WHITE,
+                    text_pos=(MAP_BOTTOMRIGHT[0] + ((WINDOW_SIZE[0] - MAP_BOTTOMRIGHT[0]) / 2) + 15,
+                              WINDOW_SIZE[1] / 2 + 60)
+                )
 
             # draw explosions
             self.particle_group.update()
@@ -104,21 +126,23 @@ class Stage:
 
                 # move each stuff
                 if isinstance(entity, MoveableEntity):
-                    entity.move()
+                    if not self.game_over or (self.game_over and not isinstance(entity, Player)):
+                        entity.move()
 
-                    if not isinstance(entity, Shot):
-                        EntityMediator.check_collision_after_movement(entity, self.entity_list)
+                        if not isinstance(entity, Shot):
+                            EntityMediator.check_collision_after_movement(entity, self.entity_list)
 
                 # shot
                 if isinstance(entity, (Player, Enemy)):
-                    shot = entity.shoot()
-                    if shot is not None:
-                        self.entity_list.append(shot)
+                    if not self.game_over or (self.game_over and not isinstance(entity, Player)):
+                        shot = entity.shoot()
+                        if shot is not None:
+                            self.entity_list.append(shot)
 
-                        if entity.name in ['player1', 'player2']:
-                            shoot_sfx = pygame.mixer.Sound(f'./assets/sounds/sfx/tank_shot.wav')
-                            shoot_sfx.set_volume(0.4)
-                            shoot_sfx.play()
+                            if entity.name in ['player1', 'player2']:
+                                shoot_sfx = pygame.mixer.Sound(f'./assets/sounds/sfx/tank_shot.wav')
+                                shoot_sfx.set_volume(0.4)
+                                shoot_sfx.play()
 
                 found_player1 = False
                 found_player2 = False
@@ -128,6 +152,7 @@ class Stage:
                     if isinstance(player_search, Player) and player_search.name == 'player2':
                         found_player2 = True
 
+                # game over condition or resurrection
                 if not found_player1 and self.player1_lives > 0:
                     self.player1_lives -= 1
                     # player 1 resurrection
@@ -137,39 +162,21 @@ class Stage:
 
                 if self.game_mode == 'TWO PLAYERS':
                     if not found_player2 and self.player2_lives > 0:
-                        self.player1_lives -= 1
+                        self.player2_lives -= 1
                         # player 2 resurrection
                         player = EntityFactory.get_entity('player2')
                         # player.score = player_score[0]
                         self.entity_list.append(player)
 
-                # player hud
-                # if entity.name == 'player1_ship':
-                #     self.level_text(
-                #         text_size=14,
-                #         text=f'Player 1 Health: {entity.health}',
-                #         text_color=NEON_PINK,
-                #         text_pos=(10, WIN_HEIGHT - 60)
-                #     )
-                #     self.level_text(
-                #         text_size=14,
-                #         text=f'Score: {entity.score}',
-                #         text_color=NEON_PINK,
-                #         text_pos=(10, WIN_HEIGHT - 30)
-                #     )
-                # if entity.name == 'player2_ship':
-                #     self.level_text(
-                #         text_size=14,
-                #         text=f'Player 2 Health: {entity.health}',
-                #         text_color=NEON_PINK,
-                #         text_pos=(WIN_WIDTH - 230, WIN_HEIGHT - 60)
-                #     )
-                #     self.level_text(
-                #         text_size=14,
-                #         text=f'Score: {entity.score} PTS',
-                #         text_color=NEON_PINK,
-                #         text_pos=(WIN_WIDTH - 230, WIN_HEIGHT - 30)
-                #     )
+                found_flag = False
+                for flag_search in self.entity_list:
+                    if isinstance(flag_search, Block) and flag_search.name == 'flag':
+                        found_flag = True
+
+                if (not found_player2 and not found_player1) or not found_flag:
+                    self.game_over = True
+                else:
+                    self.game_over = False
 
             # get any pygame event
             for event in pygame.event.get():

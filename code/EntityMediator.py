@@ -21,16 +21,16 @@ class EntityMediator:
         for compared_entity in entity_list:
             if entity == compared_entity: continue
             if isinstance(entity, Shot) or isinstance(compared_entity, Shot): continue
-            if (isinstance(compared_entity, Block) and not compared_entity.is_solid): continue
-            if (isinstance(entity, Block) and not entity.is_solid): continue
+            if isinstance(compared_entity, Block) and not compared_entity.is_solid: continue
+            if isinstance(entity, Block) and not entity.is_solid: continue
 
             # Check overlap
-            if (entity.rect.right >= compared_entity.rect.left and
-                    entity.rect.left <= compared_entity.rect.right and
-                    entity.rect.bottom >= compared_entity.rect.top and
-                    entity.rect.top <= compared_entity.rect.bottom):
+            margin = 5
+            if (entity.rect.right >= compared_entity.rect.left + margin and
+                    entity.rect.left <= compared_entity.rect.right - margin and
+                    entity.rect.bottom >= compared_entity.rect.top + margin and
+                    entity.rect.top <= compared_entity.rect.bottom - margin):
                 collided = True
-                print(f'collided with {compared_entity.name}')
                 break  # stop checking once collision is found
 
         # If collided, revert
