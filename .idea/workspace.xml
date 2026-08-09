@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ee23a2a5-6e00-4823-9c09-5e3c5cf737a3" name="Changes" comment="Readme update:&#10;- Added README.md.&#10;- Added compiled executable.">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Metal-Siege.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;pgmatheus-code&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/pgmatheus-code/Metal-Siege.git&quot;,
+    &quot;accountId&quot;: &quot;dec2054e-9911-4933-8b2a-bd4d90faa7a1&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="3HO1zdTfktMt1yL95KUm37q3VEe" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.Game.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Menu.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/pgmat/OneDrive/Meus Estudos/BES/Disciplinas/19. LProg/Metal-Siege/code&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\pgmat\OneDrive\Meus Estudos\BES\Disciplinas\19. LProg\Metal-Siege\code" />
+      <recent name="C:\Users\pgmat\OneDrive\Meus Estudos\BES\Disciplinas\19. LProg\Metal-Siege\assets" />
+      <recent name="C:\Users\pgmat\OneDrive\Meus Estudos\BES\Disciplinas\19. LProg\Metal-Siege" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\pgmat\OneDrive\Meus Estudos\BES\Disciplinas\19. LProg\Metal-Siege\assets\sounds" />
+      <recent name="C:\Users\pgmat\OneDrive\Meus Estudos\BES\Disciplinas\19. LProg\Metal-Siege\assets\sprites\main_menu" />
+      <recent name="C:\Users\pgmat\OneDrive\Meus Estudos\BES\Disciplinas\19. LProg\Metal-Siege\code" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Metal-Siege" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-164cda30dcd9-0af03a5fa574-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.26830.99" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ee23a2a5-6e00-4823-9c09-5e3c5cf737a3" name="Changes" comment="" />
+      <created>1785724565060</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1785724565060</updated>
+    </task>
+    <task id="LOCAL-00001" summary="- First commit">
+      <option name="closed" value="true" />
+      <created>1785724714538</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1785724714538</updated>
+    </task>
+    <task id="LOCAL-00002" summary="- Started implementing main menu.">
+      <option name="closed" value="true" />
+      <created>1785729260800</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1785729260800</updated>
+    </task>
+    <task id="LOCAL-00003" summary="- Started implementing level hud.">
+      <option name="closed" value="true" />
+      <created>1785847166362</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1785847166362</updated>
+    </task>
+    <task id="LOCAL-00004" summary="- New classes.&#10;- New assets.&#10;- First player instance (test).">
+      <option name="closed" value="true" />
+      <created>1785953941862</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1785953941863</updated>
+    </task>
+    <task id="LOCAL-00005" summary="- Both players instantiation.&#10;- Tanks rotating towards movement angle.&#10;- Shot implemented.">
+      <option name="closed" value="true" />
+      <created>1785957451032</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1785957451032</updated>
+    </task>
+    <task id="LOCAL-00006" summary="- Started block implementing.">
+      <option name="closed" value="true" />
+      <created>1785959049684</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1785959049684</updated>
+    </task>
+    <task id="LOCAL-00007" summary="- Implemented enemy random spawn and movement.">
+      <option name="closed" value="true" />
+      <created>1785961441816</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1785961441816</updated>
+    </task>
+    <task id="LOCAL-00008" summary="- Fixed map bounds.&#10;- Added const load map system.&#10;- Implemented destruction by shots.&#10;- Implemented block const characteristeics: is_solid, is_shootable, is_damageable.">
+      <option name="closed" value="true" />
+      <created>1785977855479</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1785977855479</updated>
+    </task>
+    <task id="LOCAL-00009" summary="- Defined enemy standard spawn point.&#10;- Implemented enemy shot and player destruction.">
+      <option name="closed" value="true" />
+      <created>1785979243318</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1785979243318</updated>
+    </task>
+    <task id="LOCAL-00010" summary="- Implemented player and enemy collision.&#10;- Implemented different entity speed system based on timer.">
+      <option name="closed" value="true" />
+      <created>1786040841027</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1786040841027</updated>
+    </task>
+    <task id="LOCAL-00011" summary="- Added sound assets.&#10;- Implemented SFX and BGM.&#10;- Implemented flag destruction.">
+      <option name="closed" value="true" />
+      <created>1786063155188</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1786063155188</updated>
+    </task>
+    <task id="LOCAL-00012" summary="- Implemented explosion.">
+      <option name="closed" value="true" />
+      <created>1786066785484</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1786066785484</updated>
+    </task>
+    <task id="LOCAL-00013" summary="- Implemented resurrection.&#10;- Added stages, total of four: UNINTER, ARENA, MAZE and ORIGINAL.">
+      <option name="closed" value="true" />
+      <created>1786143141464</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1786143141464</updated>
+    </task>
+    <task id="LOCAL-00014" summary="- Implemented hud lives showing (for both players, player 2 only on 2p gameplay.&#10;- Fixed life subtraction (always subtracted from p1, now fixed.">
+      <option name="closed" value="true" />
+      <created>1786147396731</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1786147396731</updated>
+    </task>
+    <task id="LOCAL-00015" summary="- Added control showing on main menu, removed construction option.">
+      <option name="closed" value="true" />
+      <created>1786203456744</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1786203456744</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Progression update&#10;- Fixed timer by adding reset before return: pygame.time.set_timer(STAGE_END_EVENT, 0).&#10;- Implemented level change and loss condition.">
+      <option name="closed" value="true" />
+      <created>1786212885022</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1786212885022</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Score update:&#10;- Implemented score hud.&#10;- Added score values for blocks.&#10;- Implemented score increasing for every entity destroyed.">
+      <option name="closed" value="true" />
+      <created>1786225048011</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1786225048011</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Game over update:&#10;- Game over text scrolling up.">
+      <option name="closed" value="true" />
+      <created>1786228366002</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1786228366002</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Readme update:&#10;- Added README.md.&#10;- Added compiled executable.">
+      <option name="closed" value="true" />
+      <created>1786244710929</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1786244710929</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="- First commit" />
+    <MESSAGE value="- Started implementing main menu." />
+    <MESSAGE value="- Started implementing level hud." />
+    <MESSAGE value="- New classes.&#10;- New assets.&#10;- First player instance (test)." />
+    <MESSAGE value="- Both players instantiation.&#10;- Tanks rotating towards movement angle.&#10;- Shot implemented." />
+    <MESSAGE value="- Started block implementing." />
+    <MESSAGE value="- Implemented enemy random spawn and movement." />
+    <MESSAGE value="- Fixed map bounds.&#10;- Added const load map system.&#10;- Implemented destruction by shots.&#10;- Implemented block const characteristeics: is_solid, is_shootable, is_damageable." />
+    <MESSAGE value="- Defined enemy standard spawn point.&#10;- Implemented enemy shot and player destruction." />
+    <MESSAGE value="- Implemented player and enemy collision.&#10;- Implemented different entity speed system based on timer." />
+    <MESSAGE value="- Added sound assets.&#10;- Implemented SFX and BGM.&#10;- Implemented flag destruction." />
+    <MESSAGE value="- Implemented explosion." />
+    <MESSAGE value="- Implemented resurrection.&#10;- Added stages, total of four: UNINTER, ARENA, MAZE and ORIGINAL." />
+    <MESSAGE value="- Implemented hud lives showing (for both players, player 2 only on 2p gameplay.&#10;- Fixed life subtraction (always subtracted from p1, now fixed." />
+    <MESSAGE value="- Added control showing on main menu, removed construction option." />
+    <MESSAGE value="Progression update&#10;- Fixed timer by adding reset before return: pygame.time.set_timer(STAGE_END_EVENT, 0).&#10;- Implemented level change and loss condition." />
+    <MESSAGE value="Score update:&#10;- Implemented score hud.&#10;- Added score values for blocks.&#10;- Implemented score increasing for every entity destroyed." />
+    <MESSAGE value="Game over update:&#10;- Game over text scrolling up." />
+    <MESSAGE value="Readme update:&#10;- Added README.md.&#10;- Added compiled executable." />
+    <option name="LAST_COMMIT_MESSAGE" value="Readme update:&#10;- Added README.md.&#10;- Added compiled executable." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/code/Controls.py</url>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
